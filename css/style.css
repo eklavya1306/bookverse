@@ -1,8 +1,22 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* ===========================
+   GOOGLE FONT
+=========================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* ===========================
+   RESET
+=========================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
+
+/* ===========================
+   VARIABLES
+=========================== */
 
 :root{
     --primary:#2563EB;
@@ -10,40 +24,49 @@
     --background:#F8FAFC;
     --text:#1E293B;
     --white:#FFFFFF;
+    --shadow:0 4px 12px rgba(0,0,0,0.1);
+    --radius:10px;
 }
 
-.navbar{
-    color:#2563EB;
-}
-
-.button{
-    background:#2563EB;
-}
-
-.logo{
-    color:#2563EB;
-    font: size 30px;
-}
+/* ===========================
+   GLOBAL
+=========================== */
 
 body{
-    font-family: 'Poppins', sans-serif;
-    background-color: var(--background);
-    color: var(--text);
-    line-height: 1.6;
+    font-family:'Poppins',sans-serif;
+    background:var(--background);
+    color:var(--text);
+    line-height:1.6;
 }
 
 a{
-    text-decoration: none;
-    color: inherit;
+    text-decoration:none;
+    color:inherit;
 }
 
 ul{
-    list-style: none;
+    list-style:none;
 }
 
 img{
-    max-width: 100%;
-    height: auto;
+    max-width:100%;
     display:block;
-    
+}
+
+.container{
+    width:90%;
+    max-width:1200px;
+    margin:auto;
+}
+
+
+button{
+    cursor:pointer;
+    border:none;
+    border-radius:var(--radius);
+}
+
+input{
+    outline:none;
+    border:none;
 }
