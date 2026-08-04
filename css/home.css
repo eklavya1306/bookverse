@@ -77,24 +77,36 @@
 /* ==========================================
    HERO
 ========================================== */
-
 .hero{
-    min-height:85vh;
+    background: linear-gradient(135deg,#162447,#3567e8);
+    color:#fff;
+    padding:100px 0;
+    
+    
+}
+.container{
 
-    background:linear-gradient(
-        135deg,
-        #0F172A,
-        #1E3A8A,
-        #2563EB
-    );
+    width:90%;
+    max-width:1200px;
+    margin:auto;
+
+}
+.hero-container{
 
     display:flex;
+
+    justify-content:space-between;
+
     align-items:center;
+
+    gap:50px;
+
 }
 
 .hero-content{
-    color:white;
+    flex:1;
     max-width:600px;
+    color:white;
 }
 
 .hero-content h1{
@@ -108,6 +120,61 @@
     margin-bottom:35px;
     opacity:.9;
 }
+.hero-image{
+
+    flex:1;
+
+    text-align:right;
+
+}
+.hero-image img{
+    width:100%;
+    max-width:650px;
+
+    border-radius:20px;
+
+    box-shadow:
+    0 25px 60px rgba(0,0,0,.35);
+
+    animation:float 5s ease-in-out infinite;
+}
+@keyframes float{
+
+    0%{
+
+        transform:translateY(0);
+
+    }
+
+    50%{
+
+        transform:translateY(-15px);
+
+    }
+
+    100%{
+
+        transform:translateY(0);
+
+    }
+
+}
+@keyframes float{
+
+    0%{
+        transform:translateY(0px);
+    }
+
+    50%{
+        transform:translateY(-20px);
+    }
+
+    100%{
+        transform:translateY(0px);
+    }
+
+}
+
 
 .explore-btn{
     display:inline-block;
@@ -127,9 +194,12 @@
 
 .explore-btn:hover{
 
-    transform:translateY(-5px);
-
     background:#EA580C;
+
+    transform:translateY(-6px);
+
+    box-shadow:0 15px 30px rgba(249,115,22,.45);
+
 
 }
 /* FEATURES */
@@ -237,6 +307,7 @@ SEARCH SECTION
     display:flex;
 
     gap:20px;
+
 
 }
 
@@ -351,29 +422,20 @@ POPULAR DESTINATIONS
 }
 
 .book-btn{
-
+    display:block;
     width:100%;
-
+    text-align:center;
     background:#2563EB;
-
     color:white;
-
-    border:none;
-
     padding:12px;
-
     border-radius:8px;
-
-    cursor:pointer;
-
+    text-decoration:none;
+    font-weight:600;
     transition:.3s;
-
 }
 
 .book-btn:hover{
-
     background:#1D4ED8;
-
 }
 /* ================= WHY BOOKVERSE ================= */
 
