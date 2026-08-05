@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BookVerse | One Platform. Every Booking.</title>
+    <title>BookVerse | Travel Booking</title>
     <link rel="stylesheet" href="css/style.css" />
     <link
       rel="stylesheet"
@@ -12,6 +12,15 @@
     <link rel="icon" href="assets/images/logo.png" />
     <link rel="stylesheet" href="css/home.css" />
     <link rel="stylesheet" href="css/travel.css" />
+    <style>
+      /* Quick inline CSS to handle hiding inactive tabs */
+      .tab-content, .result-section {
+        display: none;
+      }
+      .tab-content.active, .result-section.active {
+        display: block; /* Or flex, depending on your original travel-form css */
+      }
+    </style>
   </head>
   <body>
     <header>
@@ -23,7 +32,6 @@
               BookVerse
             </a>
           </div>
-
           <ul class="nav-links">
             <li><a href="index.html">Home</a></li>
             <li><a href="travel.html">Travel</a></li>
@@ -31,7 +39,6 @@
             <li><a href="restaurant.html">Restaurant</a></li>
             <li><a href="contact.html">Contact</a></li>
           </ul>
-
           <div class="nav-buttons">
             <a href="login.html" class="login-btn">Login</a>
             <a href="register.html" class="register-btn">Register</a>
@@ -44,803 +51,349 @@
       <section class="travel-hero">
         <div class="container">
           <h1>✈ Travel Booking</h1>
-
           <p>Book Flights, Trains, Buses & Hotels at the best prices.</p>
         </div>
       </section>
+
       <section class="travel-search">
         <div class="container">
-            <div class="tabs">
-              <button class="active" id="flight-tab">✈ Flight</button>
-              <button id="train-tab">🚆 Train</button>
-              <button id="bus-tab">🚌 Bus</button>
-            </div> 
-            <form class="travel-form">
-              <select name="from" required>
-                <option value="">From</option>
-
-                <optgroup label="🇮🇳 India">
-                  <option>Delhi (DEL)</option>
-                  <option>Mumbai (BOM)</option>
-                  <option>Bengaluru (BLR)</option>
-                  <option>Hyderabad (HYD)</option>
-                  <option>Chennai (MAA)</option>
-                  <option>Kolkata (CCU)</option>
-                  <option>Ahmedabad (AMD)</option>
-                  <option>Goa (GOX)</option>
-                </optgroup>
-
-                <optgroup label="🌍 International">
-                  <option>Dubai (DXB)</option>
-                  <option>London (LHR)</option>
-                  <option>Singapore (SIN)</option>
-                  <option>New York (JFK)</option>
-                  <option>Paris (CDG)</option>
-                  <option>Tokyo (HND)</option>
-                </optgroup>
-              </select>
-
-              <button type="button" class="swap-btn">⇄</button>
-
-              <select name="to" required>
-                <option value="">To</option>
-
-                <optgroup label="🇮🇳 India">
-                  <option>Delhi (DEL)</option>
-                  <option>Mumbai (BOM)</option>
-                  <option>Bengaluru (BLR)</option>
-                  <option>Hyderabad (HYD)</option>
-                  <option>Chennai (MAA)</option>
-                  <option>Kolkata (CCU)</option>
-                  <option>Ahmedabad (AMD)</option>
-                  <option>Goa (GOX)</option>
-                </optgroup>
-
-                <optgroup label="🌍 International">
-                  <option>Dubai (DXB)</option>
-                  <option>London (LHR)</option>
-                  <option>Singapore (SIN)</option>
-                  <option>New York (JFK)</option>
-                  <option>Paris (CDG)</option>
-                  <option>Tokyo (HND)</option>
-                </optgroup>
-              </select>
-
-              <input type="date" />
-
-              <select>
-                <option>1 Traveller</option>
-                <option>2 Travellers</option>
-                <option>3 Travellers</option>
-                <option>4 Travellers</option>
-              </select>
-
-              <button class="search-btn">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                Search Flights
-              </button>
-            </form>
-             <form class="travel-form">
-
-    <select name="from-station" required>
-
-        <option value="">From Station</option>
-
-        <option>New Delhi (NDLS)</option>
-        <option>Mumbai Central (MMCT)</option>
-        <option>Howrah Junction (HWH)</option>
-        <option>Chennai Central (MAS)</option>
-        <option>Bengaluru City (SBC)</option>
-        <option>Ahmedabad Junction (ADI)</option>
-        <option>Pune Junction (PUNE)</option>
-        <option>Jaipur Junction (JP)</option>
-        <option>Lucknow (LKO)</option>
-        <option>Patna Junction (PNBE)</option>
-        <option>Bhopal Junction (BPL)</option>
-        <option>Nagpur Junction (NGP)</option>
-
-    </select>
-
-    <button type="button" class="swap-btn">
-
-        ⇄
-
-    </button>
-
-    <select name="to-station" required>
-
-        <option value="">To Station</option>
-
-        <option>New Delhi (NDLS)</option>
-        <option>Mumbai Central (MMCT)</option>
-        <option>Howrah Junction (HWH)</option>
-        <option>Chennai Central (MAS)</option>
-        <option>Bengaluru City (SBC)</option>
-        <option>Ahmedabad Junction (ADI)</option>
-        <option>Pune Junction (PUNE)</option>
-        <option>Jaipur Junction (JP)</option>
-        <option>Lucknow (LKO)</option>
-        <option>Patna Junction (PNBE)</option>
-        <option>Bhopal Junction (BPL)</option>
-        <option>Nagpur Junction (NGP)</option>
-
-    </select>
-
-    <input type="date">
-
-    <select>
-
-        <option>General</option>
-        <option>Sleeper</option>
-        <option>AC Chair Car</option>
-        <option>3A</option>
-        <option>2A</option>
-        <option>1A</option>
-
-    </select>
-
-    <button class="search-btn">
-
-        <i class="fa-solid fa-train"></i>
-
-        Search Trains
-
-    </button>
-
-</form>
-<form class="travel-form">
-
-    <select name="from-city" required>
-
-        <option value="">From City</option>
-
-        <option>Delhi</option>
-        <option>Mumbai</option>
-        <option>Bengaluru</option>
-        <option>Hyderabad</option>
-        <option>Chennai</option>
-        <option>Pune</option>
-        <option>Ahmedabad</option>
-        <option>Jaipur</option>
-        <option>Lucknow</option>
-        <option>Goa</option>
-        <option>Nagpur</option>
-        <option>Indore</option>
-
-    </select>
-
-    <button type="button" class="swap-btn">
-
-        ⇄
-
-    </button>
-
-    <select name="to-city" required>
-
-        <option value="">To City</option>
-
-        <option>Delhi</option>
-        <option>Mumbai</option>
-        <option>Bengaluru</option>
-        <option>Hyderabad</option>
-        <option>Chennai</option>
-        <option>Pune</option>
-        <option>Ahmedabad</option>
-        <option>Jaipur</option>
-        <option>Lucknow</option>
-        <option>Goa</option>
-        <option>Nagpur</option>
-        <option>Indore</option>
-
-    </select>
-
-    <input type="date">
-
-    <select>
-
-        <option>1 Passenger</option>
-        <option>2 Passengers</option>
-        <option>3 Passengers</option>
-        <option>4 Passengers</option>
-
-    </select>
-
-    <button class="search-btn">
-
-        <i class="fa-solid fa-bus"></i>
-
-        Search Buses
-
-    </button>
-
-</form>
+          <!-- JS Tab Buttons -->
+          <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab(event, 'flight')">✈ Flight</button>
+            <button class="tab-btn" onclick="switchTab(event, 'train')">🚆 Train</button>
+            <button class="tab-btn" onclick="switchTab(event, 'bus')">🚌 Bus</button>
+          </div> 
           
+          <!-- Flight Form (Active by default) -->
+          <form class="travel-form tab-content active" id="flight-form">
+            <select name="from" required>
+              <option value="">From</option>
+              <optgroup label="🇮🇳 India">
+                <option>Delhi (DEL)</option>
+                <option>Mumbai (BOM)</option>
+                <option>Bengaluru (BLR)</option>
+              </optgroup>
+            </select>
+            <button type="button" class="swap-btn" onclick="swapValues('flight-form')">⇄</button>
+            <select name="to" required>
+              <option value="">To</option>
+              <optgroup label="🇮🇳 India">
+                <option>Mumbai (BOM)</option>
+                <option>Delhi (DEL)</option>
+                <option>Bengaluru (BLR)</option>
+              </optgroup>
+            </select>
+            <input type="date" />
+            <select>
+              <option>1 Traveller</option>
+              <option>2 Travellers</option>
+            </select>
+            <button class="search-btn"><i class="fa-solid fa-magnifying-glass"></i> Search Flights</button>
+          </form>
+
+          <!-- Train Form -->
+          <form class="travel-form tab-content" id="train-form">
+            <select name="from" required>
+              <option value="">From Station</option>
+              <option>New Delhi (NDLS)</option>
+              <option>Mumbai Central (MMCT)</option>
+            </select>
+            <button type="button" class="swap-btn" onclick="swapValues('train-form')">⇄</button>
+            <select name="to" required>
+              <option value="">To Station</option>
+              <option>Mumbai Central (MMCT)</option>
+              <option>New Delhi (NDLS)</option>
+            </select>
+            <input type="date" />
+            <select>
+              <option>1 Passenger</option>
+              <option>2 Passengers</option>
+            </select>
+            <button class="search-btn"><i class="fa-solid fa-magnifying-glass"></i> Search Trains</button>
+          </form>
+
+          <!-- Bus Form -->
+          <form class="travel-form tab-content" id="bus-form">
+            <select name="from" required>
+              <option value="">From City</option>
+              <option>Delhi</option>
+              <option>Manali</option>
+            </select>
+            <button type="button" class="swap-btn" onclick="swapValues('bus-form')">⇄</button>
+            <select name="to" required>
+              <option value="">To City</option>
+              <option>Manali</option>
+              <option>Delhi</option>
+            </select>
+            <input type="date" />
+            <select>
+              <option>1 Seat</option>
+              <option>2 Seats</option>
+            </select>
+            <button class="search-btn"><i class="fa-solid fa-magnifying-glass"></i> Search Buses</button>
+          </form>
         </div>
       </section>
 
-        <section id="flight-section" style="display: block">
-          <div class="container">
-      <section class="travel-results">
+      <!-- Flight Results -->
+      <section id="flight-section" class="result-section active">
         <div class="container">
-          <div class="section-title">
-            
-            <h2>Available Flights</h2>
-            <p>Select the flight that best suits your journey.</p>
-          </div>
-
-          <div class="flight-card">
-            <div class="flight-header">
-              <div class="airline">
-                <img src="assets/images/airindia.png" alt="Air India" />
-
-                <div>
-                  <h3>Air India</h3>
-                  <p>AI - 302</p>
-                </div>
+          <section class="travel-results">
+            <div class="container">
+              <div class="section-title">
+                <h2>Available Flights</h2>
+                <p>Select the flight that best suits your journey.</p>
               </div>
-
-              <div class="rating">⭐ 4.8</div>
-            </div>
-
-            <div class="flight-details">
-              <div class="departure">
-                <h2>09:00</h2>
-                <p>Delhi</p>
-              </div>
-
-              <div class="flight-path">
-                <p>2h 15m</p>
-
-                <div class="plane-line">───────── ✈ ─────────</div>
-
-                <span>Non Stop • Economy</span>
-              </div>
-
-              <div class="arrival">
-                <h2>11:15</h2>
-                <p>Mumbai</p>
-              </div>
-            </div>
-
-            <div class="flight-footer">
-              <div>
-                <h2>₹7,999</h2>
-
-                <p>Per Traveller</p>
-              </div>
-
-              <button class="book-flight">Book Flight</button>
-            </div>
-          </div>
-          <div class="flight-card">
-            <div class="flight-header">
-              <div class="airline">
-                <img src="assets/images/indigo.png" alt="Indigo" />
-
-                <div>
-                  <h3>IndiGo</h3>
-                  <p>6E - 302</p>
-                </div>
-              </div>
-
-              <div class="rating">⭐ 4.8</div>
-            </div>
-
-            <div class="flight-details">
-              <div class="departure">
-                <h2>11:00</h2>
-                <p>Mumbai</p>
-              </div>
-
-              <div class="flight-path">
-                <p>1h 30m</p>
-
-                <div class="plane-line">───────── ✈ ─────────</div>
-
-                <span>Non Stop • Economy</span>
-              </div>
-
-              <div class="arrival">
-                <h2>12:30</h2>
-                <p>Bengaluru</p>
-              </div>
-            </div>
-
-            <div class="flight-footer">
-              <div>
-                <h2>₹5,499</h2>
-
-                <p>Per Traveller</p>
-              </div>
-
-              <button class="book-flight">Book Flight</button>
-            </div>
-          </div>
-          <div class="flight-card">
-            <div class="flight-header">
-              <div class="airline">
-                <img src="assets/images/akasa.png" alt="Akasa" />
-
-                <div>
-                  <h3>Akasa</h3>
-                  <p>AK - 302</p>
-                </div>
-              </div>
-
-              <div class="rating">⭐ 4.8</div>
-            </div>
-
-            <div class="flight-details">
-              <div class="departure">
-                <h2>09:00</h2>
-                <p>Mumbai</p>
-              </div>
-
-              <div class="flight-path">
-                <p>3h 30m</p>
-
-                <div class="plane-line">───────── ✈ ─────────</div>
-
-                <span>Non Stop • Economy</span>
-              </div>
-
-              <div class="arrival">
-                <h2>12:30</h2>
-                <p>Dubai</p>
-              </div>
-            </div>
-
-            <div class="flight-footer">
-              <div>
-                <h2>₹18,499</h2>
-
-                <p>Per Traveller</p>
-              </div>
-
-              <button class="book-flight">Book Flight</button>
-            </div>
-          </div>
-          <div class="flight-card">
-            <div class="flight-header">
-              <div class="airline">
-                <img src="assets/images/spicejet.png" alt="SpiceJet" />
-
-                <div>
-                  <h3>SpiceJet</h3>
-                  <p>SG - 302</p>
-                </div>
-              </div>
-
-              <div class="rating">⭐ 4.8</div>
-            </div>
-
-            <div class="flight-details">
-              <div class="departure">
-                <h2>17:20</h2>
-                <p>Chennai</p>
-              </div>
-
-              <div class="flight-path">
-                <p>1h 45m</p>
-
-                <div class="plane-line">───────── ✈ ─────────</div>
-
-                <span>Non Stop • Economy</span>
-              </div>
-
-              <div class="arrival">
-                <h2>19:05</h2>
-                <p>Jaipur</p>
-              </div>
-            </div>
-
-            <div class="flight-footer">
-              <div>
-                <h2>₹5,499</h2>
-
-                <p>Per Traveller</p>
-              </div>
-
-              <button class="book-flight">Book Flight</button>
-            </div>
-          </div>
-        </div>
-      </section>
-        </section>
-      
-      <section id="train-section" style="display: none">
-        <div class="container">
-           
-          <div class="section-title">
-            <h2>Available Trains</h2>
-
-            <p>Book trains across India.</p>
-          </div>
-
-          <div class="train-grid">
-            <!-- Train Card -->
-
-            <div class="train-card">
-              <div class="train-header">
-                <div>
-                  <h3>Rajdhani Express</h3>
-
-                  <p>12951</p>
-                </div>
-
-                <span class="train-type"> Superfast </span>
-              </div>
-
-              <div class="train-details">
-                <div>
-                  <h2>06:10</h2>
-
-                  <p>New Delhi (NDLS)</p>
-                </div>
-
-                <div class="train-route">
-                  <p>15h 50m</p>
-
-                  <div>════════🚆════════</div>
-
-                  <span>Direct</span>
-                </div>
-
-                <div>
-                  <h2>22:00</h2>
-
-                  <p>Mumbai Central (MMCT)</p>
-                </div>
-              </div>
-
-              <div class="train-footer">
-                <div>
-                  <h2>₹1,850</h2>
-
-                  <p>Sleeper</p>
-                </div>
-
-                <a href="booking.html" class="book-flight"> Book Ticket </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="bus-section" style="display:none;">
-        <div class="container">
-
-    <div class="section-title">
-
-        <h2>Available Buses</h2>
-
-        <p>Book AC, Sleeper and Luxury buses across India.</p>
-
-    </div>
-
-    <div class="bus-grid">
-
-        <!-- Bus 1 -->
-
-        <div class="bus-card">
-
-            <div class="bus-header">
-
-                <div>
-
-                    <h3>VRL Travels</h3>
-
-                    <p>Volvo Multi Axle AC Sleeper</p>
-
-                </div>
-
-                <span class="bus-type">
-                    AC Sleeper
-                </span>
-
-            </div>
-
-            <div class="bus-details">
-
-                <div>
-
-                    <h2>09:30 PM</h2>
-
-                    <p>Mumbai</p>
-
-                </div>
-
-                <div class="bus-route">
-
-                    <p>10h 30m</p>
-
+              <div class="flight-card">
+                <div class="flight-header">
+                  <div class="airline">
+                    <img src="assets/images/airindia.png" alt="Air India" />
                     <div>
-
-                        ════════🚌════════
-
+                      <h3>Air India</h3>
+                      <p>AI - 302</p>
                     </div>
-
-                    <span>Direct</span>
-
+                  </div>
+                  <div class="rating">⭐ 4.8</div>
                 </div>
-
-                <div>
-
-                    <h2>08:00 AM</h2>
-
-                    <p>Goa</p>
-
-                </div>
-
-            </div>
-
-            <div class="bus-footer">
-
-                <div>
-
-                    <h2>₹1,299</h2>
-
-                    <p>Per Seat</p>
-
-                </div>
-
-                <a href="booking.html" class="book-flight">
-
-                    Book Ticket
-
-                </a>
-
-            </div>
-
-        </div>
-
-        <!-- Bus 2 -->
-
-        <div class="bus-card">
-
-            <div class="bus-header">
-
-                <div>
-
-                    <h3>RedBus Express</h3>
-
-                    <p>Mercedes Benz AC Seater</p>
-
-                </div>
-
-                <span class="bus-type">
-
-                    Luxury
-
-                </span>
-
-            </div>
-
-            <div class="bus-details">
-
-                <div>
-
-                    <h2>07:00 PM</h2>
-
+                <div class="flight-details">
+                  <div class="departure">
+                    <h2>09:00</h2>
                     <p>Delhi</p>
-
+                  </div>
+                  <div class="flight-path">
+                    <p>2h 15m</p>
+                    <div class="plane-line">──────── ✈ ────────</div>
+                    <span>Non Stop • Economy</span>
+                  </div>
+                  <div class="arrival">
+                    <h2>11:15</h2>
+                    <p>Mumbai</p>
+                  </div>
                 </div>
+                <div class="flight-footer">
+                  <div>
+                    <h2>₹7,999</h2>
+                    <p>Per Traveller</p>
+                  </div>
+                  <button class="book-flight">Book Flight</button>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
 
-                <div class="bus-route">
-
-                    <p>6h 45m</p>
-
+        <div class="container">
+          <section class="travel-results">
+            <div class="container">
+              
+              <div class="flight-card">
+                <div class="flight-header">
+                  <div class="airline">
+                    <img src="assets/images/airindia.png" alt="Air India" />
                     <div>
-
-                        ════════🚌════════
-
+                      <h3>Air India</h3>
+                      <p>AI - 302</p>
                     </div>
-
-                    <span>Direct</span>
-
+                  </div>
+                  <div class="rating">⭐ 4.8</div>
                 </div>
-
-                <div>
-
-                    <h2>01:45 AM</h2>
-
-                    <p>Jaipur</p>
-
+                <div class="flight-details">
+                  <div class="departure">
+                    <h2>09:00</h2>
+                    <p>Delhi</p>
+                  </div>
+                  <div class="flight-path">
+                    <p>2h 15m</p>
+                    <div class="plane-line">──────── ✈ ────────</div>
+                    <span>Non Stop • Economy</span>
+                  </div>
+                  <div class="arrival">
+                    <h2>11:15</h2>
+                    <p>Mumbai</p>
+                  </div>
                 </div>
-
+                <div class="flight-footer">
+                  <div>
+                    <h2>₹7,999</h2>
+                    <p>Per Traveller</p>
+                  </div>
+                  <button class="book-flight">Book Flight</button>
+                </div>
+              </div>
             </div>
-
-            <div class="bus-footer">
-
-                <div>
-
-                    <h2>₹899</h2>
-
-                    <p>Per Seat</p>
-
-                </div>
-
-                <a href="booking.html" class="book-flight">
-
-                    Book Ticket
-
-                </a>
-
-            </div>
-
+          </section>
         </div>
 
-        <!-- Bus 3 -->
-
-        <div class="bus-card">
-
-            <div class="bus-header">
-
-                <div>
-
-                    <h3>SRS Travels</h3>
-
-                    <p>AC Sleeper</p>
-
-                </div>
-
-                <span class="bus-type">
-
-                    Sleeper
-
-                </span>
-
-            </div>
-
-            <div class="bus-details">
-
-                <div>
-
-                    <h2>08:15 PM</h2>
-
-                    <p>Bengaluru</p>
-
-                </div>
-
-                <div class="bus-route">
-
-                    <p>9h 15m</p>
-
+        <div class="container">
+          <section class="travel-results">
+            <div class="container">
+              
+              <div class="flight-card">
+                <div class="flight-header">
+                  <div class="airline">
+                    <img src="assets/images/airindia.png" alt="Air India" />
                     <div>
-
-                        ════════🚌════════
-
+                      <h3>Air India</h3>
+                      <p>AI - 302</p>
                     </div>
-
-                    <span>Direct</span>
-
+                  </div>
+                  <div class="rating">⭐ 4.8</div>
                 </div>
-
-                <div>
-
-                    <h2>05:30 AM</h2>
-
-                    <p>Hyderabad</p>
-
+                <div class="flight-details">
+                  <div class="departure">
+                    <h2>09:00</h2>
+                    <p>Delhi</p>
+                  </div>
+                  <div class="flight-path">
+                    <p>2h 15m</p>
+                    <div class="plane-line">──────── ✈ ────────</div>
+                    <span>Non Stop • Economy</span>
+                  </div>
+                  <div class="arrival">
+                    <h2>11:15</h2>
+                    <p>Mumbai</p>
+                  </div>
                 </div>
-
+                <div class="flight-footer">
+                  <div>
+                    <h2>₹7,999</h2>
+                    <p>Per Traveller</p>
+                  </div>
+                  <button class="book-flight">Book Flight</button>
+                </div>
+              </div>
             </div>
-
-            <div class="bus-footer">
-
-                <div>
-
-                    <h2>₹1,099</h2>
-
-                    <p>Per Seat</p>
-
-                </div>
-
-                <a href="booking.html" class="book-flight">
-
-                    Book Ticket
-
-                </a>
-
-            </div>
-
+          </section>
         </div>
 
-    </div>
-
+        <div class="container">
+          <section class="travel-results">
+            <div class="container">
+              <div class="flight-card">
+                <div class="flight-header">
+                  <div class="airline">
+                    <img src="assets/images/airindia.png" alt="Air India" />
+                    <div>
+                      <h3>Air India</h3>
+                      <p>AI - 302</p>
+                    </div>
+                  </div>
+                  <div class="rating">⭐ 4.8</div>
+                </div>
+                <div class="flight-details">
+                  <div class="departure">
+                    <h2>09:00</h2>
+                    <p>Delhi</p>
+                  </div>
+                  <div class="flight-path">
+                    <p>2h 15m</p>
+                    <div class="plane-line">──────── ✈ ────────</div>
+                    <span>Non Stop • Economy</span>
+                  </div>
+                  <div class="arrival">
+                    <h2>11:15</h2>
+                    <p>Mumbai</p>
+                  </div>
+                </div>
+                <div class="flight-footer">
+                  <div>
+                    <h2>₹7,999</h2>
+                    <p>Per Traveller</p>
+                  </div>
+                  <button class="book-flight">Book Flight</button>
+                </div>
+              </div>
+            </div>
+          </section>
         </div>
-        </section>
+      </section>
 
+      <!-- Train Results -->
+      <section id="train-section" class="result-section">
+        <div class="container">
+          <section class="travel-results">
+            <div class="container">
+              <div class="section-title">
+                <h2>Available Trains</h2>
+                <p>Select the train for your journey.</p>
+              </div>
+              <!-- Insert your train cards here -->
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <!-- Bus Results -->
+      <section id="bus-section" class="result-section">
+        <div class="container">
+          <section class="travel-results">
+            <div class="container">
+              <div class="section-title">
+                <h2>Available Buses</h2>
+                <p>Select the bus for your journey.</p>
+              </div>
+              <!-- Insert your bus cards here -->
+            </div>
+          </section>
+        </div>
+      </section>
+      
       <footer>
         <div class="container footer-container">
           <div class="footer-about">
             <h2>BookVerse</h2>
             <p>One Platform. Every Booking.</p>
           </div>
-
           <div class="footer-links">
             <h3>Quick Links</h3>
-
             <a href="index.html">Home</a>
             <a href="travel.html">Travel</a>
             <a href="entertainment.html">Entertainment</a>
             <a href="restaurant.html">Restaurant</a>
           </div>
-
           <div class="footer-contact">
             <h3>Contact</h3>
-
             <p>bookverse@gmail.com</p>
-
             <p>+91 9876543210</p>
           </div>
         </div>
-
         <div class="copyright">© 2026 BookVerse. All Rights Reserved.</div>
       </footer>
 
       <script src="js/script.js"></script>
     </main>
+
     <script>
-      const swapBtn = document.querySelector(".swap-btn");
+      // Function to handle tab switching on the same page
+      function switchTab(event, type) {
+        // 1. Remove 'active' class from all tab buttons
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        tabBtns.forEach(btn => btn.classList.remove('active'));
 
-      swapBtn.addEventListener("click", () => {
-        const from = document.querySelector('select[name="from"]');
+        // 2. Add 'active' class to the clicked button
+        event.currentTarget.classList.add('active');
 
-        const to = document.querySelector('select[name="to"]');
+        // 3. Hide all forms and show the target form
+        const forms = document.querySelectorAll('.tab-content');
+        forms.forEach(form => form.classList.remove('active'));
+        document.getElementById(type + '-form').classList.add('active');
 
+        // 4. Hide all result sections and show the target section
+        const sections = document.querySelectorAll('.result-section');
+        sections.forEach(section => section.classList.remove('active'));
+        document.getElementById(type + '-section').classList.add('active');
+      }
+
+      // Function to swap "From" and "To" values for the currently active form
+      function swapValues(formId) {
+        const form = document.getElementById(formId);
+        const from = form.querySelector('select[name="from"]');
+        const to = form.querySelector('select[name="to"]');
+        
         let temp = from.value;
-
         from.value = to.value;
-
         to.value = temp;
-      });
-
-const flightTab=document.getElementById("flight-tab");
-const trainTab=document.getElementById("train-tab");
-const busTab=document.getElementById("bus-tab");
-
-const flight=document.getElementById("flight-section");
-const train=document.getElementById("train-section");
-const bus=document.getElementById("bus-section");
-
-flightTab.onclick=function(){
-
-    flight.style.display="block";
-    train.style.display="none";
-    bus.style.display="none";
-
-    flightTab.classList.add("active");
-    trainTab.classList.remove("active");
-    busTab.classList.remove("active");
-
-}
-
-trainTab.onclick=function(){
-
-    flight.style.display="none";
-    train.style.display="block";
-    bus.style.display="none";
-
-    flightTab.classList.remove("active");
-    trainTab.classList.add("active");
-    busTab.classList.remove("active");
-
-}
-
-busTab.onclick=function(){
-
-    flight.style.display="none";
-    train.style.display="none";
-    bus.style.display="block";
-
-    flightTab.classList.remove("active");
-    trainTab.classList.remove("active");
-    busTab.classList.add("active");
-
-}
-
-
+      }
     </script>
   </body>
 </html>

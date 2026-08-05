@@ -1,42 +1,603 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>BookVerse | One Platform. Every Booking.</title>        
-        <link rel="stylesheet" href="css/style.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-        <link rel="icon" href="assets/images/logo.png">
-        <link rel="stylesheet" href="css/home.css">
-    </head>
-    <body>
-        <header>
-            <div class="container">
-            <nav class="navbar">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BookVerse | Restaurants & Dining</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="icon" href="assets/images/logo.png" />
+    <link rel="stylesheet" href="css/restaurant.css" />
+    
+  </head>
+  <body>
+    <!-- Header Navigation -->
+    <header>
+      <div class="container">
+        <nav class="navbar">
+          <div class="logo">
+            <a href="index.html" class="logo-text">
+              <i class="fa-solid fa-location-dot"></i>
+              BookVerse
+            </a>
+          </div>
+          <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="travel.html">Travel</a></li>
+            <li><a href="entertainment.html">Entertainment</a></li>
+            <li><a href="restaurant.html" class="active">Restaurant</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+          <div class="nav-buttons">
+            <a href="login.html" class="login-btn">Login</a>
+            <a href="register.html" class="register-btn">Register</a>
+          </div>
+        </nav>
+      </div>
+    </header>
 
-            <div class="logo">
-                
-                <a href="index.html" class="logo-text">
-                    <i class="fa-solid fa-location-dot"></i>
-                    BookVerse
-                </a>
+    <main>
+      <!-- Hero Section -->
+      <section class="resto-hero">
+        <div class="container">
+          <h1>Discover & Book Top Dining Experiences</h1>
+          <p>
+            Reserve tables instantly at the city's finest restaurants, cafes,
+            and fine-dine spots.
+          </p>
+        </div>
+      </section>
+
+      <!-- City and Realistic Area Filters -->
+      <div class="container">
+        <div class="filter-container">
+          <div class="filter-group">
+            <label for="city-dropdown">Choose City:</label>
+            <select id="city-dropdown" onchange="updateAreas()">
+              <option value="">-- Select City --</option>
+              <option value="mumbai">Mumbai</option>
+              <option value="delhi">Delhi</option>
+              <option value="bengaluru">Bengaluru</option>
+              <option value="hyderabad">Hyderabad</option>
+              <option value="kolkata">Kolkata</option>
+              <option value="chennai">Chennai</option>
+              <option value="pune">Pune</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label for="area-dropdown">Choose Area / Location:</label>
+            <select id="area-dropdown">
+              <option value="">-- Select City First --</option>
+            </select>
+          </div>
+          <button class="search-filter-btn" onclick="applyFilters()">
+            <i class="fa-solid fa-filter"></i> Filter
+          </button>
+        </div>
+
+        <!-- Ad Banner with Animated Element -->
+        <div class="ad-banner">
+          <span class="ad-badge">Special Offer</span>
+          <div>
+            <h3>Hungry after the show? Check out Shivay Dosa Center! 🍽️</h3>
+            <p style="margin: 5px 0 0 0; font-size: 14px">
+              Exclusive snack menu and combo offers running from 13 Feb to 17
+              Feb 2026.
+            </p>
+          </div>
+          <div class="pulse-icon">🥞</div>
+        </div>
+
+        <!-- POPULAR RESTAURANTS SECTION -->
+        <div class="section-header">
+          <i class="fa-solid fa-fire" style="color: #ef4444"></i> Popular
+          Restaurant Options
+        </div>
+
+        <div class="resto-grid">
+          <!-- Popular Card 1 -->
+          <div class="resto-card" data-city="mumbai" data-area="bandra">
+            <div
+              class="resto-img"
+              style="
+                background-image: url(&quot;https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80&quot;);
+              "
+            >
+              <span class="tag-popular">Popular</span>
+              <span class="rating-badge">4.8 ★</span>
             </div>
-
-            <ul class="nav-links">
-                <li><a href="index.html" >Home</a></li>
-                <li><a href="travel.html">Travel</a></li>
-                <li><a href="entertainment.html">Entertainment</a></li>
-                <li><a href="restaurant.html">Restaurant</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-
-            <div class="nav-buttons">
-                <a href="login.html" class="login-btn">Login</a>
-                <a href="register.html" class="register-btn">Register</a>
+            <div class="resto-content">
+              <h3 class="resto-title">Grand Spice Kitchen</h3>
+              <p class="resto-info">
+                North Indian, Mughlai • Bandra West, Mumbai
+              </p>
+              <div class="resto-meta">
+                <span
+                  ><i class="fa-solid fa-indian-rupee-sign"></i> 1,500 for
+                  two</span
+                >
+                <span><i class="fa-regular fa-clock"></i> 45 mins wait</span>
+              </div>
+              <button
+                class="book-table-btn"
+                onclick="
+                  openBookingModal('Grand Spice Kitchen', 'Bandra West, Mumbai')
+                "
+              >
+                Book Table
+              </button>
             </div>
+          </div>
 
-            </nav>
+          <!-- Popular Card 2 -->
+          <div class="resto-card" data-city="delhi" data-area="connaught">
+            <div
+              class="resto-img"
+              style="
+                background-image: url(&quot;https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=600&q=80&quot;);
+              "
+            >
+              <span class="tag-popular">Popular</span>
+              <span class="rating-badge">4.7 ★</span>
             </div>
-        </header>
-    </body>
+            <div class="resto-content">
+              <h3 class="resto-title">Bella Italia Trattoria</h3>
+              <p class="resto-info">
+                Italian, European • Connaught Place, Delhi
+              </p>
+              <div class="resto-meta">
+                <span
+                  ><i class="fa-solid fa-indian-rupee-sign"></i> 2,200 for
+                  two</span
+                >
+                <span><i class="fa-regular fa-clock"></i> 30 mins wait</span>
+              </div>
+              <button
+                class="book-table-btn"
+                onclick="
+                  openBookingModal(
+                    'Bella Italia Trattoria',
+                    'Connaught Place, Delhi',
+                  )
+                "
+              >
+                Book Table
+              </button>
+            </div>
+          </div>
+
+          <!-- Popular Card 3 -->
+          <div class="resto-card" data-city="bengaluru" data-area="indiranagar">
+            <div
+              class="resto-img"
+              style="
+                background-image: url(&quot;https://images.unsplash.com/photo-1537047902294-62a40c20a6ae?auto=format&fit=crop&w=600&q=80&quot;);
+              "
+            >
+              <span class="tag-popular">Popular</span>
+              <span class="rating-badge">4.9 ★</span>
+            </div>
+            <div class="resto-content">
+              <h3 class="resto-title">Brewsky & Kitchen</h3>
+              <p class="resto-info">
+                Continental, Microbrewery • Indiranagar, Bengaluru
+              </p>
+              <div class="resto-meta">
+                <span
+                  ><i class="fa-solid fa-indian-rupee-sign"></i> 2,000 for
+                  two</span
+                >
+                <span><i class="fa-regular fa-clock"></i> Live Music</span>
+              </div>
+              <button
+                class="book-table-btn"
+                onclick="
+                  openBookingModal(
+                    'Brewsky & Kitchen',
+                    'Indiranagar, Bengaluru',
+                  )
+                "
+              >
+                Book Table
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ALL REMAINING RESTAURANTS SECTION -->
+        <div class="section-header">
+          <i class="fa-solidlist" style="color: var(--primary-blue)"></i> All
+          Available Restaurants
+        </div>
+
+        <div class="resto-grid">
+          <!-- Remaining Card 4 -->
+          <div class="resto-card" data-city="hyderabad" data-area="jubilee">
+            <div
+              class="resto-img"
+              style="
+                background-image: url(&quot;https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=600&q=80&quot;);
+              "
+            >
+              <span class="rating-badge">4.5 ★</span>
+            </div>
+            <div class="resto-content">
+              <h3 class="resto-title">Royal Hyderabadi Bawarchi</h3>
+              <p class="resto-info">
+                Biryani, Authentic Hyderabadi • Jubilee Hills, Hyderabad
+              </p>
+              <div class="resto-meta">
+                <span
+                  ><i class="fa-solid fa-indian-rupee-sign"></i> 900 for
+                  two</span
+                >
+                <span><i class="fa-regular fa-clock"></i> Fast Service</span>
+              </div>
+              <button
+                class="book-table-btn"
+                onclick="
+                  openBookingModal(
+                    'Royal Hyderabadi Bawarchi',
+                    'Jubilee Hills, Hyderabad',
+                  )
+                "
+              >
+                Book Table
+              </button>
+            </div>
+          </div>
+
+          <!-- Remaining Card 5 -->
+          <div class="resto-card" data-city="kolkata" data-area="parkstreet">
+            <div
+              class="resto-img"
+              style="
+                background-image: url(&quot;https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80&quot;);
+              "
+            >
+              <span class="rating-badge">4.6 ★</span>
+            </div>
+            <div class="resto-content">
+              <h3 class="resto-title">The Vintage Street Cafe</h3>
+              <p class="resto-info">
+                Bakery, Cafe, Continental • Park Street, Kolkata
+              </p>
+              <div class="resto-meta">
+                <span
+                  ><i class="fa-solid fa-indian-rupee-sign"></i> 800 for
+                  two</span
+                >
+                <span><i class="fa-regular fa-clock"></i> Cozy Vibe</span>
+              </div>
+              <button
+                class="book-table-btn"
+                onclick="
+                  openBookingModal(
+                    'The Vintage Street Cafe',
+                    'Park Street, Kolkata',
+                  )
+                "
+              >
+                Book Table
+              </button>
+            </div>
+          </div>
+
+          <!-- Remaining Card 6 -->
+          <div class="resto-card" data-city="pune" data-area="koregaon">
+            <div
+              class="resto-img"
+              style="
+                background-image: url(&quot;https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=600&q=80&quot;);
+              "
+            >
+              <span class="rating-badge">4.7 ★</span>
+            </div>
+            <div class="resto-content">
+              <h3 class="resto-title">Kyoto Asian Bistro</h3>
+              <p class="resto-info">
+                Japanese, Sushi, Thai • Koregaon Park, Pune
+              </p>
+              <div class="resto-meta">
+                <span
+                  ><i class="fa-solid fa-indian-rupee-sign"></i> 1,800 for
+                  two</span
+                >
+                <span><i class="fa-regular fa-clock"></i> Outdoor Seating</span>
+              </div>
+              <button
+                class="book-table-btn"
+                onclick="
+                  openBookingModal('Kyoto Asian Bistro', 'Koregaon Park, Pune')
+                "
+              >
+                Book Table
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- ========================================= -->
+    <!-- TABLE BOOKING MODAL POPUP                 -->
+    <!-- ========================================= -->
+    <div class="modal-overlay" id="bookingModal">
+      <div class="modal-content">
+        <span class="close-modal" onclick="closeBookingModal()">&times;</span>
+
+        <!-- STEP 1: Date & Time Selection -->
+        <div id="step-datetime" class="booking-step active">
+          <h2 id="modal-resto-name">Restaurant Name</h2>
+          <p
+            id="modal-resto-location"
+            style="color: var(--text-light); margin-top: -5px"
+          >
+            Location
+          </p>
+
+          <label>Select Reservation Date:</label>
+          <input type="date" id="reservation-date" />
+
+          <label>Select Meal Timing & Slot:</label>
+          <div class="time-slots-grid">
+            <div
+              class="slot-pill"
+              onclick="selectSlot(this, '12:30 PM (Lunch)')"
+            >
+              12:30 PM
+            </div>
+            <div
+              class="slot-pill"
+              onclick="selectSlot(this, '01:30 PM (Lunch)')"
+            >
+              01:30 PM
+            </div>
+            <div
+              class="slot-pill"
+              onclick="selectSlot(this, '04:00 PM (Snacks)')"
+            >
+              04:00 PM
+            </div>
+            <div
+              class="slot-pill"
+              onclick="selectSlot(this, '07:30 PM (Dinner)')"
+            >
+              07:30 PM
+            </div>
+            <div
+              class="slot-pill"
+              onclick="selectSlot(this, '08:30 PM (Dinner)')"
+            >
+              08:30 PM
+            </div>
+            <div
+              class="slot-pill"
+              onclick="selectSlot(this, '09:30 PM (Dinner)')"
+            >
+              09:30 PM
+            </div>
+          </div>
+
+          <label>Number of Guests:</label>
+          <select id="guest-count">
+            <option value="2">2 Guests (Standard Table)</option>
+            <option value="4">4 Guests (Family Table)</option>
+            <option value="6">6 Guests (Large Booth)</option>
+            <option value="10+">10+ Guests (Party/Event)</option>
+          </select>
+
+          <button class="btn" onclick="proceedToConfirmation()">
+            Continue to Confirm
+          </button>
+        </div>
+
+        <!-- STEP 2: Booking Confirmation Pass -->
+        <div id="step-confirmation" class="booking-step">
+          <h2>🎉 Table Reserved Successfully!</h2>
+          <p>
+            Your table has been locked in. Show this digital pass upon arrival
+            at the venue.
+          </p>
+
+          <div class="reservation-pass">
+            <h3
+              id="pass-resto-name"
+              style="margin: 0 0 10px 0; font-size: 22px"
+            >
+              Restaurant
+            </h3>
+            <p style="margin: 5px 0">
+              📍 Location: <strong id="pass-location">--</strong>
+            </p>
+            <p style="margin: 5px 0">
+              📅 Date & Slot: <strong id="pass-datetime">--</strong>
+            </p>
+            <p style="margin: 5px 0">
+              👥 Guests: <strong id="pass-guests">--</strong>
+            </p>
+            <div style="margin-top: 15px; font-size: 28px; letter-spacing: 5px">
+              <i class="fa-solid fa-qrcode"></i>
+            </div>
+          </div>
+
+          <button
+            class="btn"
+            onclick="closeBookingModal()"
+            style="background: var(--primary-blue)"
+          >
+            Done & Return
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================= -->
+    <!-- JAVASCRIPT LOGIC                          -->
+    <!-- ========================================= -->
+    <script>
+      // City & Realistic Area Mapping Data
+      const cityAreasMap = {
+        mumbai: [
+          { value: "bandra", name: "Bandra West / BKC" },
+          { value: "andheri", name: "Andheri Lokhandwala" },
+          { value: "lower-parel", name: "Lower Parel (High Street)" },
+          { value: "colaba", name: "Colaba / Fort" },
+          { value: "juhu", name: "Juhu Beachside" },
+        ],
+        delhi: [
+          { value: "connaught", name: "Connaught Place (CP)" },
+          { value: "hauzkhas", name: "Hauz Khas Village" },
+          { value: "saket", name: "Saket Select Citywalk" },
+          { value: "dwarka", name: "Dwarka Sector 12" },
+          { value: "chandni", name: "Chandni Chowk Old Delhi" },
+        ],
+        bengaluru: [
+          { value: "indiranagar", name: "Indiranagar 100ft Road" },
+          { value: "koramangala", name: "Koramangala 5th Block" },
+          { value: "mgroad", name: "MG Road & Brigade Road" },
+          { value: "whitefield", name: "Whitefield Tech Park" },
+        ],
+        hyderabad: [
+          { value: "jubilee", name: "Jubilee Hills Road No. 36" },
+          { value: "banjara", name: "Banjara Hills" },
+          { value: "gachibowli", name: "Gachibowli Financial District" },
+          { value: "hitec", name: "Hitec City Cyber Towers" },
+        ],
+        kolkata: [
+          { value: "parkstreet", name: "Park Street Dining Hub" },
+          { value: "saltlake", name: "Salt Lake Sector V" },
+          { value: "ballygunge", name: "Ballygunge Circular Road" },
+          { value: "newtown", name: "New Town Action Area" },
+        ],
+        chennai: [
+          { value: "tnagar", name: "T. Nagar Pondy Bazaar" },
+          { value: "velachery", name: "Velachery Phoenix Mall" },
+          { value: "annanagar", name: "Anna Nagar 2nd Avenue" },
+          { value: "adyar", name: "Adyar Canal Bank Road" },
+        ],
+        pune: [
+          { value: "koregaon", name: "Koregaon Park North Main Rd" },
+          { value: "vimannagar", name: "Viman Nagar Phoenix Mall" },
+          { value: "hinjewadi", name: "Hinjewadi IT Phase 1" },
+          { value: "deccan", name: "Deccan Gymkhana" },
+        ],
+      };
+
+      // Update Areas dynamically when city changes
+      function updateAreas() {
+        const citySelect = document.getElementById("city-dropdown").value;
+        const areaSelect = document.getElementById("area-dropdown");
+
+        areaSelect.innerHTML =
+          '<option value="">-- Select Area / Location --</option>';
+
+        if (citySelect && cityAreasMap[citySelect]) {
+          cityAreasMap[citySelect].forEach((area) => {
+            const opt = document.createElement("option");
+            opt.value = area.value;
+            opt.textContent = area.name;
+            areaSelect.appendChild(opt);
+          });
+        }
+      }
+
+      // Filter Restaurant Cards based on selected City & Area
+      function applyFilters() {
+        const selectedCity = document.getElementById("city-dropdown").value;
+        const selectedArea = document.getElementById("area-dropdown").value;
+        const cards = document.querySelectorAll(".resto-card");
+
+        cards.forEach((card) => {
+          const cardCity = card.getAttribute("data-city");
+          const cardArea = card.getAttribute("data-area");
+
+          let matchesCity = !selectedCity || cardCity === selectedCity;
+          let matchesArea = !selectedArea || cardArea === selectedArea;
+
+          if (matchesCity && matchesArea) {
+            card.style.display = "block";
+          } else {
+            card.style.display = "none";
+          }
+        });
+      }
+
+      // Modal Handling
+      const modal = document.getElementById("bookingModal");
+      let selectedResto = "";
+      let selectedLoc = "";
+      let selectedTimeSlot = "";
+
+      function openBookingModal(restoName, location) {
+        selectedResto = restoName;
+        selectedLoc = location;
+        document.getElementById("modal-resto-name").textContent = restoName;
+        document.getElementById("modal-resto-location").textContent = location;
+
+        // Reset steps
+        document
+          .querySelectorAll(".booking-step")
+          .forEach((s) => s.classList.remove("active"));
+        document.getElementById("step-datetime").classList.add("active");
+
+        // Set default date to today
+        const today = new Date().toISOString().split("T")[0];
+        document.getElementById("reservation-date").value = today;
+
+        modal.classList.add("active");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeBookingModal() {
+        modal.classList.remove("active");
+        document.body.style.overflow = "auto";
+      }
+
+      function selectSlot(element, slotText) {
+        document
+          .querySelectorAll(".slot-pill")
+          .forEach((p) => p.classList.remove("selected"));
+        element.classList.add("selected");
+        selectedTimeSlot = slotText;
+      }
+
+      function proceedToConfirmation() {
+        const dateVal = document.getElementById("reservation-date").value;
+        const guestVal = document.getElementById("guest-count").value;
+
+        if (!dateVal) {
+          alert("Please pick a reservation date.");
+          return;
+        }
+        if (!selectedTimeSlot) {
+          alert("Please select a time slot for your table.");
+          return;
+        }
+
+        // Populate Pass Details
+        document.getElementById("pass-resto-name").textContent = selectedResto;
+        document.getElementById("pass-location").textContent = selectedLoc;
+        document.getElementById("pass-datetime").textContent =
+          `${dateVal} at ${selectedTimeSlot}`;
+        document.getElementById("pass-guests").textContent =
+          `${guestVal} Guests`;
+
+        // Switch to confirmation step
+        document
+          .querySelectorAll(".booking-step")
+          .forEach((s) => s.classList.remove("active"));
+        document.getElementById("step-confirmation").classList.add("active");
+      }
+
+      // Close modal when clicking outside
+      window.onclick = function (event) {
+        if (event.target == modal) {
+          closeBookingModal();
+        }
+      };
+    </script>
+  </body>
 </html>
