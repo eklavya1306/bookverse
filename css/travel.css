@@ -1,933 +1,561 @@
-/* ==========================================
-   TRAVEL PAGE
-========================================== */
+/* ===========================
+           VARIABLES & RESET
+        =========================== */
+:root {
+  --primary: #2563eb;
+  --secondary: #f97316;
+  --background: #f8fafc;
+  --text: #1e293b;
+  --white: #ffffff;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --radius: 12px;
+}
 
-.travel-hero {
-  background: linear-gradient(135deg, #162447, #3567e8);
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background: var(--background);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* ===========================
+           NAVBAR
+        =========================== */
+header {
+  background: var(--white);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 80px;
+}
+
+.logo-text {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 35px;
+}
+
+.nav-links a {
+  font-size: 16px;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--primary);
+}
+
+.nav-buttons {
+  display: flex;
+  gap: 15px;
+}
+
+.login-btn {
+  border: 2px solid var(--primary);
+  color: var(--primary);
+  padding: 10px 22px;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.login-btn:hover {
+  background: var(--primary);
   color: white;
-  padding: 70px 0;
+}
+
+.register-btn {
+  background: var(--primary);
+  color: white;
+  padding: 10px 22px;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.register-btn:hover {
+  background: #1d4ed8;
+}
+
+/* ===========================
+           HERO SECTION
+        =========================== */
+.travel-hero {
+  background: linear-gradient(135deg, #162447, #2563eb);
+  color: white;
+  padding: 70px 0 110px;
   text-align: center;
 }
 
 .travel-hero h1 {
-  font-size: 50px;
+  font-size: 44px;
   margin-bottom: 15px;
+  font-weight: 700;
 }
 
 .travel-hero p {
-  font-size: 20px;
+  font-size: 18px;
   opacity: 0.9;
 }
 
-/* Search Card */
-
-.travel-search {
-  margin-top: -40px;
-  padding-bottom: 60px;
+/* ===========================
+           SEARCH & SPLIT LAYOUT
+        =========================== */
+.travel-search-wrapper {
+  width: 90%;
+  max-width: 1250px;
+  margin: -60px auto 60px;
+  background: #ffffff;
+  padding: 40px;
+  border-radius: 24px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
 }
 
-.search-card {
-  background: white;
+.layout-split {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
+}
+
+.booking-section {
+  flex: 1;
+}
+
+.image-section {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #f0f4ff, #e2e8f0);
   border-radius: 20px;
-  padding: 30px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  padding: 40px;
+  min-height: 380px;
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.03);
 }
 
-/* Tabs */
-
-.tabs {
+/* Booking Tabs */
+.booking-types {
   display: flex;
   gap: 15px;
   margin-bottom: 25px;
 }
 
-.tabs button {
-  padding: 12px 22px;
+.booking-types button {
   border: none;
-  border-radius: 10px;
-  background: #eef2ff;
-  cursor: pointer;
-  font-size: 16px;
-  transition: 0.3s;
-}
-
-.tabs .active {
-  background: #2563eb;
-  color: white;
-}
-
-/* Form */
-
-.travel-form {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 20px;
-}
-
-.travel-form input,
-.travel-form select {
-  padding: 15px;
-
-  border: 1px solid #ddd;
-
-  border-radius: 10px;
-
-  font-size: 16px;
-}
-
-.travel-form button {
-  background: #f97316;
-
-  color: white;
-
-  border: none;
-
-  border-radius: 10px;
-
-  cursor: pointer;
-
-  font-size: 17px;
-
-  transition: 0.3s;
-}
-
-.travel-form button:hover {
-  background: #ea580c;
-}
-.travel-form select {
-  width: 100%;
-  padding: 15px;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  font-size: 16px;
-  background: white;
-  cursor: pointer;
-  outline: none;
-}
-
-.travel-form select:focus {
-  border-color: #2563eb;
-  box-shadow: 0 0 8px rgba(37, 99, 235, 0.3);
-}
-.swap-btn {
-  width: 55px;
-  height: 55px;
-
-  border: none;
-
-  border-radius: 50%;
-
-  background: #2563eb;
-
-  color: white;
-
-  font-size: 24px;
-
-  cursor: pointer;
-
-  transition: 0.3s;
-
-  align-self: center;
-}
-
-.swap-btn:hover {
-  transform: rotate(180deg);
-
-  background: #1d4ed8;
-}
-/* ==========================
-   FLIGHT RESULTS
-========================== */
-
-.flight-grid {
-  display: grid;
-
-  gap: 25px;
-}
-
-.flight-card {
-  background: white;
-
-  border-radius: 18px;
-
-  padding: 25px;
-
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-
-  transition: 0.3s;
-}
-
-.flight-card:hover {
-  transform: translateY(-5px);
-}
-
-.flight-top {
-  display: flex;
-
-  align-items: center;
-
-  gap: 20px;
-}
-
-.flight-top img {
-  width: 70px;
-}
-
-.flight-route {
-  display: flex;
-
-  justify-content: space-between;
-
-  align-items: center;
-
-  margin: 30px 0;
-}
-
-.flight-route h2 {
-  color: #2563eb;
-}
-
-.flight-bottom {
-  display: flex;
-
-  justify-content: space-between;
-
-  align-items: center;
-}
-.book-btn {
-  width: 200px;
-  margin: 25px auto 0;
-  display: block;
-
-  background: #2563eb;
-  color: #fff;
-  border: none;
-  padding: 14px 20px;
-  border-radius: 10px;
+  background: #eef3ff;
+  color: #222;
+  padding: 12px 24px;
+  border-radius: 12px;
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
   transition: 0.3s;
 }
 
-.book-btn:hover {
-  background: #1d4ed8;
+.booking-types button:hover,
+.booking-types .active {
+  background: #2563eb;
+  color: #fff;
 }
-body {
-  background: #f5f7fb;
+
+/* Form Layout */
+.travel-form {
+  display: none;
 }
 
-/* Flight Card */
+.travel-form.active {
+  display: block;
+}
 
-.flight-card {
-  background: white;
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 50px 1fr;
+  gap: 15px;
+  align-items: center;
+}
 
-  border-radius: 22px;
+.form-group-full {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-top: 15px;
+}
 
-  padding: 25px;
+.input-box label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #64748b;
+  margin-bottom: 6px;
+  display: block;
+  text-transform: uppercase;
+}
 
-  margin: 25px auto;
-
-  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.08);
-
+.travel-form select,
+.travel-form input {
+  width: 100%;
+  height: 52px;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  padding: 0 16px;
+  font-size: 15px;
+  outline: none;
+  background: #fff;
   transition: 0.3s;
 }
 
-.flight-card:hover {
-  transform: translateY(-6px);
+.travel-form select:focus,
+.travel-form input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 8px rgba(37, 99, 235, 0.2);
 }
 
-.flight-header {
+.swap-btn {
+  width: 50px;
+  height: 50px;
+  border: none;
+  border-radius: 12px;
+  background: #2563eb;
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+  transition: 0.35s;
+  margin-top: 22px;
   display: flex;
-
-  justify-content: space-between;
-
   align-items: center;
+  justify-content: center;
+}
 
+.swap-btn:hover {
+  transform: rotate(180deg);
+  background: #1d4ed8;
+}
+
+.search-btn {
+  width: 100%;
+  height: 54px;
+  border: none;
+  border-radius: 12px;
+  background: #ff6b00;
+  color: #fff;
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-top: 20px;
+}
+
+.search-btn:hover {
+  background: #ea580c;
+  transform: translateY(-2px);
+}
+
+/* Dynamic Visual Animations in Right Panel */
+.travel-illustration {
+  text-align: center;
+  display: none;
+}
+
+.travel-illustration.active {
+  display: block;
+  animation: fadeInScale 0.5s ease forwards;
+}
+
+.travel-illustration i {
+  font-size: 80px;
+  color: #2563eb;
+  margin-bottom: 20px;
+}
+
+.travel-illustration h3 {
+  font-size: 22px;
+  color: #1e293b;
+  margin-bottom: 8px;
+}
+
+.travel-illustration p {
+  color: #64748b;
+  font-size: 14px;
+  max-width: 280px;
+  margin: 0 auto;
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ===========================
+           RESULTS CARDS (Flights, Trains, Buses)
+        =========================== */
+.result-section {
+  display: none;
+  margin-bottom: 60px;
+}
+
+.result-section.active {
+  display: block;
+}
+
+.section-title {
   margin-bottom: 30px;
+  text-align: center;
+}
+
+.section-title h2 {
+  font-size: 32px;
+  color: #1e293b;
+}
+
+.flight-card,
+.train-card,
+.bus-card {
+  background: white;
+  width: 100%;
+  max-width: 900px;
+  margin: 25px auto;
+  padding: 25px 30px;
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+  transition: 0.3s;
+}
+
+.flight-card:hover,
+.train-card:hover,
+.bus-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+.flight-header,
+.train-header,
+.bus-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
 }
 
 .airline {
   display: flex;
-
   align-items: center;
-
   gap: 15px;
 }
 
-.airline img {
-  width: 45px;
-}
-
 .airline h3 {
-  margin: 0;
-
-  font-size: 24px;
+  font-size: 20px;
+  font-weight: 600;
 }
 
 .airline p {
   color: #666;
-
-  margin-top: 5px;
+  font-size: 14px;
 }
 
-.flight-details {
+.rating {
+  background: #16a34a;
+  color: white;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.flight-details,
+.train-details,
+.bus-details {
   display: flex;
-
-  justify-content: space-evenly;
-
+  justify-content: space-between;
   align-items: center;
-
-  gap: 60px;
-
-  margin: 25px 0;
+  margin: 20px 0;
 }
 
 .departure h2,
 .arrival h2 {
   color: #2563eb;
-
-  font-size: 38px;
+  font-size: 32px;
 }
 
 .departure p,
 .arrival p {
   color: #555;
-
-  font-size: 18px;
+  font-size: 15px;
 }
 
 .flight-path {
   text-align: center;
-
   flex: 1;
 }
 
 .flight-path p {
-  font-weight: bold;
-
-  margin-bottom: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 5px;
 }
 
 .plane-line {
-  font-size: 28px;
-
+  font-size: 22px;
   color: #2563eb;
-
-  margin: 10px 0;
+  margin: 5px 0;
 }
 
 .flight-path span {
   color: #777;
+  font-size: 13px;
 }
 
-.flight-footer {
+.flight-footer,
+.train-footer,
+.bus-footer {
   display: flex;
-
   justify-content: space-between;
-
   align-items: center;
-
   border-top: 1px solid #eee;
-
-  padding-top: 20px;
+  padding-top: 18px;
 }
 
 .flight-footer h2 {
+  font-size: 24px;
   color: #111827;
 }
 
 .flight-footer p {
   color: #777;
+  font-size: 13px;
 }
 
-.flight-card {
-  background: white;
-
-  width: 70%; /* Smaller card */
-
-  max-width: 850px;
-
-  margin: 25px auto;
-
-  padding: 22px 28px;
-
-  border-radius: 18px;
-
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-
+.book-flight {
+  width: 160px;
+  height: 45px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
   transition: 0.3s;
 }
-.book-flight {
-  width: 180px;
 
-  height: 48px;
-
-  background: #2563eb;
-
-  color: white;
-
-  border: none;
-
-  border-radius: 10px;
-
-  font-size: 16px;
-
-  font-weight: 600;
-
-  cursor: pointer;
-}
 .book-flight:hover {
   background: #1d4ed8;
 }
 
-.rating {
+/* Badge tags for Train/Bus types */
+.tag-badge {
   background: #16a34a;
-
   color: white;
-
   padding: 6px 14px;
-
   border-radius: 20px;
-
-  font-size: 15px;
-}
-/* TRAIN */
-
-.train-grid{
-
-display:grid;
-
-gap:25px;
-
+  font-size: 13px;
+  font-weight: 500;
 }
 
-.train-card{
-
-background:white;
-
-width:70%;
-
-max-width:850px;
-
-margin:25px auto;
-
-padding:25px;
-
-border-radius:20px;
-
-box-shadow:0 10px 25px rgba(0,0,0,.08);
-
-transition:.3s;
-
+/* ===========================
+           FOOTER
+        =========================== */
+footer {
+  background: #1e293b;
+  color: white;
+  padding: 50px 0 20px;
 }
 
-.train-card:hover{
-
-transform:translateY(-5px);
-
+.footer-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 40px;
+  margin-bottom: 40px;
 }
 
-.train-header{
-
-display:flex;
-
-justify-content:space-between;
-
-align-items:center;
-
-margin-bottom:25px;
-
+.footer-about h2 {
+  margin-bottom: 12px;
 }
 
-.train-type{
-
-background:#16A34A;
-
-color:white;
-
-padding:8px 15px;
-
-border-radius:20px;
-
-font-size:14px;
-
+.footer-about p,
+.footer-contact p,
+.footer-links a {
+  color: #94a3b8;
+  font-size: 14px;
 }
 
-.train-details{
-
-display:flex;
-
-justify-content:space-between;
-
-align-items:center;
-
-margin:25px 0;
-
-}
-
-.train-route{
-
-text-align:center;
-
-}
-
-.train-route p{
-
-font-weight:bold;
-
-margin-bottom:10px;
-
-}
-
-.train-route div{
-
-font-size:24px;
-
-color:#2563EB;
-
-}
-
-.train-footer{
-
-display:flex;
-
-justify-content:space-between;
-
-align-items:center;
-
-border-top:1px solid #eee;
-
-padding-top:20px;
-
-}
-/* ==========================
-   BUS
-========================== */
-
-.bus-grid{
-
-    display:grid;
-
-    gap:25px;
-
-}
-
-.bus-card{
-
-    background:white;
-
-    width:70%;
-
-    max-width:850px;
-
-    margin:25px auto;
-
-    padding:25px;
-
-    border-radius:20px;
-
-    box-shadow:0 10px 25px rgba(0,0,0,.08);
-
-    transition:.3s;
-
-}
-
-.bus-card:hover{
-
-    transform:translateY(-5px);
-
-}
-
-.bus-header{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    margin-bottom:25px;
-
-}
-
-.bus-type{
-
-    background:#F97316;
-
-    color:white;
-
-    padding:8px 15px;
-
-    border-radius:20px;
-
-    font-size:14px;
-
-}
-
-.bus-details{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    margin:25px 0;
-
-}
-
-.bus-route{
-
-    text-align:center;
-
-}
-
-.bus-route p{
-
-    font-weight:bold;
-
-    margin-bottom:10px;
-
-}
-
-.bus-route div{
-
-    font-size:24px;
-
-    color:#2563EB;
-
-}
-
-.bus-footer{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    border-top:1px solid #eee;
-
-    padding-top:20px;
-
-}
-/* ==========================================
-   TRAVEL SEARCH SECTION
-========================================== */
-
-.travel-search{
-    width:90%;
-    max-width:1300px;
-    margin:-70px auto 60px;
-    background:#fff;
-    padding:30px;
-    border-radius:24px;
-    box-shadow:0 15px 40px rgba(0,0,0,.12);
-}
-
-/* Booking Tabs */
-
-.booking-types{
-    display:flex;
-    gap:15px;
-    margin-bottom:25px;
-}
-
-.booking-types button{
-    border:none;
-    background:#EEF3FF;
-    color:#222;
-    padding:15px 28px;
-    border-radius:12px;
-    font-size:18px;
-    font-weight:600;
-    cursor:pointer;
-    transition:.3s;
-}
-
-.booking-types button:hover{
-    background:#2563EB;
-    color:#fff;
-}
-
-.booking-types .active{
-    background:#2563EB;
-    color:#fff;
-}
-
-/* Search Form */
-
-.travel-form{
-    display:grid;
-    grid-template-columns:
-    1.4fr
-    70px
-    1.4fr
-    1.1fr
-    1.1fr
-    1.3fr;
-
-    gap:18px;
-    align-items:center;
-}
-
-/* Inputs */
-
-.travel-form select,
-.travel-form input{
-
-    width:100%;
-    height:55px;
-    border:1px solid #ddd;
-    border-radius:12px;
-    padding:0 18px;
-    font-size:17px;
-    outline:none;
-    transition:.3s;
-}
-
-.travel-form select:focus,
-.travel-form input:focus{
-
-    border-color:#2563EB;
-    box-shadow:0 0 10px rgba(37,99,235,.15);
-
-}
-
-/* Swap Button */
-
-.swap-btn{
-
-    width:55px;
-    height:65px;
-    border:none;
-    border-radius:12px;
-    background:#FF6B00;
-    color:#fff;
-    font-size:24px;
-    cursor:pointer;
-    transition:.35s;
-}
-
-.swap-btn:hover{
-
-    transform:rotate(180deg);
-    background:#EA580C;
-
-}
-
-/* Search Button */
-
-.search-btn{
-
-    width:100%;
-    height:55px;
-    border:none;
-    border-radius:12px;
-    background:#FF6B00;
-    color:#fff;
-    font-size:18px;
-    font-weight:600;
-    cursor:pointer;
-    transition:.3s;
-    white-space:nowrap;
-}
-
-.search-btn:hover{
-
-    background:#EA580C;
-    transform:translateY(-2px);
-
-}
-
-/* Responsive */
-
-@media(max-width:1100px){
-
-.travel-form{
-
-grid-template-columns:1fr 70px 1fr;
-
-}
-
-.search-btn{
-
-grid-column:1/4;
-
-}
-
-}
-
-@media(max-width:768px){
-
-.travel-search{
-
-    width:90%;
-    max-width:1250px;
-
-    margin:-70px auto 70px;
-
-    padding:25px 30px;
-
-    background:white;
-
-    border-radius:22px;
-
-    box-shadow:0 20px 50px rgba(0,0,0,.12);
-
-}
-
-.booking-types{
-
-flex-wrap:wrap;
-margin-bottom:20px;
-
-}
-
-.travel-form{
-
-grid-template-columns:1fr;
-
-}
-
-.swap-btn{
-
-width:100%;
-
-}
-
-}
-.travel-results{
-
-    margin-top:80px;
-
-}
-/* Container holding both the form and the image */
-.search-layout {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 40px; /* Space between the form and the image */
-  margin-top: -30px; /* Adjust this if you need to pull it up into the blue hero section */
-}
-
-/* Left side: The White Form Box */
-.search-box {
-  flex: 0 0 50%; /* Takes up exactly 50% of the row */
-  max-width: 550px; /* Prevents the box from getting too wide */
-  background: #ffffff;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Adds the soft shadow */
-}
-
-/* Make sure the form inputs take up the full width of the smaller box */
-.search-box form {
+.footer-links {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 8px;
 }
 
-/* Right side: Space for your image/animation */
-.search-visual {
-  flex: 1; /* Takes up all remaining space on the right */
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.footer-links h3,
+.footer-contact h3 {
+  color: white;
+  font-size: 16px;
+  margin-bottom: 8px;
 }
 
-/* Styling for whatever image you place inside */
-.search-visual img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 12px;
-  /* Add an animation here later if you want a floating effect */
+.copyright {
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 20px;
+  color: #94a3b8;
+  font-size: 13px;
 }
 
-/* Mobile Responsiveness: Stack them vertically on smaller screens */
-@media (max-width: 900px) {
-  .search-layout {
-    flex-direction: column;
-  }
-  .search-box {
-    flex: 0 0 100%;
-    max-width: 100%;
-  }
-  .search-visual {
-    margin-top: 30px;
-  }
-}
-/* Creates the left/right layout */
-.layout-split {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 40px; 
-}
-
-/* Squeezes your original form to the left */
-.booking-section {
-  flex: 0 0 50%; 
-  max-width: 550px; 
-}
-
-/* Centers the image on the right */
-.image-section {
-  flex: 1; 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* Styles the image */
-.image-section img {
-  width: 100%;
-  height: auto;
-  border-radius: 12px; 
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Adds a nice shadow to match the card */
-}
-
-/* Ensures it stacks properly on mobile phones */
-@media (max-width: 900px) {
+/* Responsive Design */
+@media (max-width: 992px) {
   .layout-split {
     flex-direction: column;
   }
-  .booking-section, .image-section {
-    flex: 0 0 100%;
-    max-width: 100%;
-  }
   .image-section {
-    margin-top: 30px;
+    width: 100%;
+    min-height: 250px;
+  }
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+  .swap-btn {
+    width: 100%;
+    margin: 10px 0;
   }
 }
-/* 1. Shrink the box, push it left, and extend the bottom down */
-.travel-search .container {
-  max-width: 550px;       /* Makes the box smaller so the right side is blank */
-  margin-left: 5%;        /* Adds a small gap from the left edge of the screen */
-  margin-right: auto;     /* Forces all the empty space to the right side */
-  padding-bottom: 50px;   /* Extends the white container further down */
-}
-
-/* 2. Give the form inputs more room to breathe to fix the congested look */
-.travel-form {
-  display: flex;
-  flex-direction: column;
-  gap: 25px;              /* Increases vertical space between dropdowns and date picker */
-}
-
-/* 3. Add extra breathing room specifically for the search buttons */
-.travel-form .search-btn {
-  margin-top: 15px; 
-}
-
-/* 4. Ensure the layout still looks perfect and centered on mobile phones */
-@media (max-width: 900px) {
-  .travel-search .container {
-    max-width: 90%;
-    margin-left: auto;
-    margin-right: auto;
-    padding-bottom: 30px;
-  }
-}
-    

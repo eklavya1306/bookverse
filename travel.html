@@ -3,26 +3,373 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BookVerse | Travel Booking</title>
-    <link rel="stylesheet" href="css/style.css" />
+    <title>BookVerse | Professional Travel Booking</title>
+    <!-- Font Poppins & FontAwesome -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
     <link rel="icon" href="assets/images/logo.png" />
-    <link rel="stylesheet" href="css/home.css" />
-    <link rel="stylesheet" href="css/travel.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/travel.css" /> 
+
+    <!-- Dynamic Search, Modal & Notification Styles -->
     <style>
-      /* Quick inline CSS to handle hiding inactive tabs */
-      .tab-content, .result-section {
-        display: none;
+      /* Search Results Feedback Banner */
+      .bv-search-bar-status {
+        background: #eff6ff;
+        border: 1px solid #bfdbfe;
+        color: #1e40af;
+        padding: 12px 20px;
+        border-radius: 10px;
+        margin-bottom: 25px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 14px;
+        font-weight: 500;
+        animation: fadeIn 0.4s ease;
       }
-      .tab-content.active, .result-section.active {
-        display: block; /* Or flex, depending on your original travel-form css */
+
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-8px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      /* Optgroup styling for clean selection */
+      optgroup {
+        font-weight: 700;
+        color: #1e293b;
+        background: #f1f5f9;
+      }
+      option {
+        font-weight: 400;
+        color: #334155;
+        background: #ffffff;
+      }
+
+      /* Modal Overlay Backdrop */
+      .bv-modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(15, 23, 42, 0.75);
+        backdrop-filter: blur(5px);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        padding: 20px;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .bv-modal-overlay.active {
+        display: flex;
+        opacity: 1;
+      }
+
+      /* Modal Box Layout */
+      .bv-modal-box {
+        background: #ffffff;
+        width: 100%;
+        max-width: 650px;
+        max-height: 90vh;
+        overflow-y: auto;
+        border-radius: 16px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        position: relative;
+        animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      @keyframes slideUp {
+        from { transform: translateY(30px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+      }
+
+      .bv-modal-header {
+        background: #0f172a;
+        color: #ffffff;
+        padding: 20px 25px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-top-left-radius: 16px;
+        border-top-right-radius: 16px;
+      }
+
+      .bv-modal-header h3 {
+        margin: 0;
+        font-size: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .bv-modal-close {
+        background: rgba(255, 255, 255, 0.15);
+        border: none;
+        color: #fff;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s;
+      }
+
+      .bv-modal-close:hover {
+        background: #ef4444;
+      }
+
+      .bv-modal-body {
+        padding: 25px;
+      }
+
+      /* Step Indicator */
+      .bv-steps {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 25px;
+        position: relative;
+      }
+
+      .bv-steps::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: #e2e8f0;
+        z-index: 1;
+        transform: translateY(-50%);
+      }
+
+      .bv-step {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: #e2e8f0;
+        color: #64748b;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        font-size: 14px;
+        position: relative;
+        z-index: 2;
+        transition: all 0.3s;
+      }
+
+      .bv-step.active {
+        background: #2563eb;
+        color: #ffffff;
+        box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.2);
+      }
+
+      .bv-step.completed {
+        background: #10b981;
+        color: #ffffff;
+      }
+
+      /* Booking Summary Card */
+      .bv-summary-card {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 16px;
+        margin-bottom: 20px;
+      }
+
+      .bv-summary-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+        font-weight: 600;
+        color: #0f172a;
+      }
+
+      .bv-summary-route {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 15px;
+        color: #334155;
+        font-weight: 500;
+      }
+
+      /* Form Fields inside Modal */
+      .bv-form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+      }
+
+      .bv-form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        margin-bottom: 15px;
+      }
+
+      .bv-form-group.full {
+        grid-column: span 2;
+      }
+
+      .bv-form-group label {
+        font-size: 13px;
+        font-weight: 600;
+        color: #334155;
+      }
+
+      .bv-form-group input, .bv-form-group select {
+        width: 100%;
+        padding: 10px 14px;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        font-size: 14px;
+        outline: none;
+        transition: border 0.2s;
+      }
+
+      .bv-form-group input:focus, .bv-form-group select:focus {
+        border-color: #2563eb;
+      }
+
+      /* Action Buttons */
+      .bv-btn-primary {
+        width: 100%;
+        padding: 12px;
+        background: #2563eb;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s, transform 0.1s;
+      }
+
+      .bv-btn-primary:hover {
+        background: #1d4ed8;
+      }
+
+      /* Payment Options */
+      .bv-pay-options {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      .bv-pay-option {
+        border: 2px solid #e2e8f0;
+        padding: 12px;
+        border-radius: 10px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      .bv-pay-option.selected {
+        border-color: #2563eb;
+        background: #eff6ff;
+        color: #2563eb;
+      }
+
+      .bv-pay-option i {
+        font-size: 20px;
+        display: block;
+        margin-bottom: 5px;
+      }
+
+      /* Saved Ticket Card (My Bookings) */
+      .bv-ticket-card {
+        background: #ffffff;
+        border: 1px dashed #cbd5e1;
+        border-left: 6px solid #2563eb;
+        border-radius: 12px;
+        padding: 18px;
+        margin-bottom: 15px;
+        position: relative;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+      }
+
+      .bv-ticket-badge {
+        display: inline-block;
+        padding: 3px 10px;
+        font-size: 11px;
+        font-weight: 700;
+        border-radius: 20px;
+        background: #dbeafe;
+        color: #1e40af;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+      }
+
+      .bv-ticket-pnr {
+        position: absolute;
+        top: 18px;
+        right: 18px;
+        font-family: monospace;
+        background: #f1f5f9;
+        padding: 4px 8px;
+        border-radius: 6px;
+        font-size: 12px;
+        font-weight: 700;
+        color: #0f172a;
+      }
+
+      .bv-cancel-btn {
+        background: transparent;
+        border: 1px solid #ef4444;
+        color: #ef4444;
+        padding: 5px 12px;
+        border-radius: 6px;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        margin-top: 10px;
+        transition: all 0.2s;
+      }
+
+      .bv-cancel-btn:hover {
+        background: #ef4444;
+        color: #fff;
+      }
+
+      .bv-empty-state {
+        text-align: center;
+        padding: 40px 20px;
+        color: #64748b;
+      }
+
+      .bv-empty-state i {
+        font-size: 48px;
+        margin-bottom: 15px;
+        color: #cbd5e1;
+      }
+
+      .bv-nav-booking-link {
+        color: #2563eb !important;
+        font-weight: 600 !important;
+        cursor: pointer;
       }
     </style>
   </head>
   <body>
+    <!-- Header / Navbar -->
     <header>
       <div class="container">
         <nav class="navbar">
@@ -32,13 +379,16 @@
               BookVerse
             </a>
           </div>
+
           <ul class="nav-links">
             <li><a href="index.html">Home</a></li>
             <li><a href="travel.html">Travel</a></li>
             <li><a href="entertainment.html">Entertainment</a></li>
             <li><a href="restaurant.html">Restaurant</a></li>
             <li><a href="contact.html">Contact</a></li>
+            <li><a href="javascript:void(0)" onclick="openMyBookingsModal()" class="bv-nav-booking-link"><i class="fa-solid fa-ticket"></i> My Bookings</a></li>
           </ul>
+
           <div class="nav-buttons">
             <a href="login.html" class="login-btn">Login</a>
             <a href="register.html" class="register-btn">Register</a>
@@ -48,351 +398,968 @@
     </header>
 
     <main>
+      <!-- Hero Section -->
       <section class="travel-hero">
         <div class="container">
-          <h1>✈ Travel Booking</h1>
-          <p>Book Flights, Trains, Buses & Hotels at the best prices.</p>
+          <h1>✈ Explore the World with BookVerse</h1>
+          <p>
+            Book domestic & international flights, high-speed rail networks, and luxury intercity buses instantly.
+          </p>
         </div>
       </section>
 
-      <section class="travel-search">
-        <div class="container">
-          <!-- JS Tab Buttons -->
-          <div class="tabs">
-            <button class="tab-btn active" onclick="switchTab(event, 'flight')">✈ Flight</button>
-            <button class="tab-btn" onclick="switchTab(event, 'train')">🚆 Train</button>
-            <button class="tab-btn" onclick="switchTab(event, 'bus')">🚌 Bus</button>
-          </div> 
-          
-          <!-- Flight Form (Active by default) -->
-          <form class="travel-form tab-content active" id="flight-form">
-            <select name="from" required>
-              <option value="">From</option>
-              <optgroup label="🇮🇳 India">
-                <option>Delhi (DEL)</option>
-                <option>Mumbai (BOM)</option>
-                <option>Bengaluru (BLR)</option>
-              </optgroup>
-            </select>
-            <button type="button" class="swap-btn" onclick="swapValues('flight-form')">⇄</button>
-            <select name="to" required>
-              <option value="">To</option>
-              <optgroup label="🇮🇳 India">
-                <option>Mumbai (BOM)</option>
-                <option>Delhi (DEL)</option>
-                <option>Bengaluru (BLR)</option>
-              </optgroup>
-            </select>
-            <input type="date" />
-            <select>
-              <option>1 Traveller</option>
-              <option>2 Travellers</option>
-            </select>
-            <button class="search-btn"><i class="fa-solid fa-magnifying-glass"></i> Search Flights</button>
-          </form>
+      <!-- Search Section with Split Layout & Visual Illustration -->
+      <div class="travel-search-wrapper">
+        <div class="layout-split">
+          <!-- Left: Booking Form Tabs -->
+          <div class="booking-section">
+            <div class="booking-types">
+              <button
+                class="tab-btn active"
+                onclick="switchTab(event, 'flight')"
+              >
+                <i class="fa-solid fa-plane"></i> Flights
+              </button>
+              <button class="tab-btn" onclick="switchTab(event, 'train')">
+                <i class="fa-solid fa-train"></i> Trains
+              </button>
+              <button class="tab-btn" onclick="switchTab(event, 'bus')">
+                <i class="fa-solid fa-bus"></i> Buses
+              </button>
+            </div>
 
-          <!-- Train Form -->
-          <form class="travel-form tab-content" id="train-form">
-            <select name="from" required>
-              <option value="">From Station</option>
-              <option>New Delhi (NDLS)</option>
-              <option>Mumbai Central (MMCT)</option>
-            </select>
-            <button type="button" class="swap-btn" onclick="swapValues('train-form')">⇄</button>
-            <select name="to" required>
-              <option value="">To Station</option>
-              <option>Mumbai Central (MMCT)</option>
-              <option>New Delhi (NDLS)</option>
-            </select>
-            <input type="date" />
-            <select>
-              <option>1 Passenger</option>
-              <option>2 Passengers</option>
-            </select>
-            <button class="search-btn"><i class="fa-solid fa-magnifying-glass"></i> Search Trains</button>
-          </form>
+            <!-- 1. Flight Form with Domestic & International Airports -->
+            <form class="travel-form active" id="flight-form" onsubmit="handleSearch(event, 'flight')">
+              <div class="form-grid">
+                <div class="input-box">
+                  <label>From</label>
+                  <select name="from" required>
+                    <option value="">Select Origin Airport</option>
+                    <optgroup label="🇮🇳 India (Domestic)">
+                      <option value="DEL" selected>New Delhi - Indira Gandhi (DEL)</option>
+                      <option value="BOM">Mumbai - Chhatrapati Shivaji (BOM)</option>
+                      <option value="BLR">Bengaluru - Kempegowda (BLR)</option>
+                      <option value="MAA">Chennai International (MAA)</option>
+                      <option value="CCU">Kolkata - Netaji Subhash Chandra (CCU)</option>
+                      <option value="HYD">Hyderabad - Rajiv Gandhi (HYD)</option>
+                      <option value="GOI">Goa - Dabolim / Mopa (GOI)</option>
+                      <option value="AMD">Ahmedabad - Sardar Vallabhbhai (AMD)</option>
+                    </optgroup>
+                    <optgroup label="🌐 International Airports">
+                      <option value="DXB">Dubai - International (DXB)</option>
+                      <option value="LHR">London - Heathrow (LHR)</option>
+                      <option value="JFK">New York - John F. Kennedy (JFK)</option>
+                      <option value="SIN">Singapore - Changi (SIN)</option>
+                      <option value="HND">Tokyo - Haneda (HND)</option>
+                      <option value="CDG">Paris - Charles de Gaulle (CDG)</option>
+                      <option value="BKK">Bangkok - Suvarnabhumi (BKK)</option>
+                      <option value="SYD">Sydney - Kingsford Smith (SYD)</option>
+                    </optgroup>
+                  </select>
+                </div>
+                <button
+                  type="button"
+                  class="swap-btn"
+                  onclick="swapValues('flight-form')"
+                  title="Swap Origin and Destination"
+                >
+                  <i class="fa-solid fa-right-left"></i>
+                </button>
+                <div class="input-box">
+                  <label>To</label>
+                  <select name="to" required>
+                    <option value="">Select Destination Airport</option>
+                    <optgroup label="🇮🇳 India (Domestic)">
+                      <option value="BOM" selected>Mumbai - Chhatrapati Shivaji (BOM)</option>
+                      <option value="DEL">New Delhi - Indira Gandhi (DEL)</option>
+                      <option value="BLR">Bengaluru - Kempegowda (BLR)</option>
+                      <option value="MAA">Chennai International (MAA)</option>
+                      <option value="GOI">Goa - Dabolim / Mopa (GOI)</option>
+                      <option value="CCU">Kolkata - Netaji Subhash Chandra (CCU)</option>
+                    </optgroup>
+                    <optgroup label="🌐 International Airports">
+                      <option value="DXB">Dubai - International (DXB)</option>
+                      <option value="LHR">London - Heathrow (LHR)</option>
+                      <option value="JFK">New York - John F. Kennedy (JFK)</option>
+                      <option value="SIN">Singapore - Changi (SIN)</option>
+                      <option value="HND">Tokyo - Haneda (HND)</option>
+                      <option value="CDG">Paris - Charles de Gaulle (CDG)</option>
+                      <option value="BKK">Bangkok - Suvarnabhumi (BKK)</option>
+                    </optgroup>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group-full">
+                <div class="input-box">
+                  <label>Journey Date</label>
+                  <input type="date" name="date" required />
+                </div>
+                <div class="input-box">
+                  <label>Travellers & Class</label>
+                  <select name="passengers">
+                    <option>1 Traveller, Economy</option>
+                    <option>2 Travellers, Economy</option>
+                    <option>1 Traveller, Business Class</option>
+                    <option>2 Travellers, Business Class</option>
+                  </select>
+                </div>
+              </div>
+              <button type="submit" class="search-btn">
+                <i class="fa-solid fa-magnifying-glass"></i> Search Flights
+              </button>
+            </form>
 
-          <!-- Bus Form -->
-          <form class="travel-form tab-content" id="bus-form">
-            <select name="from" required>
-              <option value="">From City</option>
-              <option>Delhi</option>
-              <option>Manali</option>
-            </select>
-            <button type="button" class="swap-btn" onclick="swapValues('bus-form')">⇄</button>
-            <select name="to" required>
-              <option value="">To City</option>
-              <option>Manali</option>
-              <option>Delhi</option>
-            </select>
-            <input type="date" />
-            <select>
-              <option>1 Seat</option>
-              <option>2 Seats</option>
-            </select>
-            <button class="search-btn"><i class="fa-solid fa-magnifying-glass"></i> Search Buses</button>
-          </form>
+            <!-- 2. Train Form with Expanded Railway Stations -->
+            <form class="travel-form" id="train-form" onsubmit="handleSearch(event, 'train')">
+              <div class="form-grid">
+                <div class="input-box">
+                  <label>From Station</label>
+                  <select name="from" required>
+                    <option value="">Boarding Railway Station</option>
+                    <optgroup label="Major Rail Hubs">
+                      <option value="NDLS">New Delhi (NDLS)</option>
+                      <option value="MMCT">Mumbai Central (MMCT)</option>
+                      <option value="CSMT">Mumbai CSMT (CSMT)</option>
+                      <option value="HWH">Howrah Junction (HWH)</option>
+                      <option value="MAS">MGR Chennai Central (MAS)</option>
+                      <option value="SBC">KSR Bengaluru City (SBC)</option>
+                      <option value="BSB">Varanasi Junction (BSB)</option>
+                      <option value="ADI">Ahmedabad Junction (ADI)</option>
+                      <option value="JP">Jaipur Junction (JP)</option>
+                    </optgroup>
+                  </select>
+                </div>
+                <button
+                  type="button"
+                  class="swap-btn"
+                  onclick="swapValues('train-form')"
+                  title="Swap Stations"
+                  style="background: #0d9488"
+                >
+                  <i class="fa-solid fa-right-left"></i>
+                </button>
+                <div class="input-box">
+                  <label>To Station</label>
+                  <select name="to" required>
+                    <option value="">Destination Station</option>
+                    <optgroup label="Major Rail Hubs">
+                      <option value="MMCT">Mumbai Central (MMCT)</option>
+                      <option value="NDLS">New Delhi (NDLS)</option>
+                      <option value="BSB">Varanasi Junction (BSB)</option>
+                      <option value="HWH">Howrah Junction (HWH)</option>
+                      <option value="MAS">MGR Chennai Central (MAS)</option>
+                      <option value="SBC">KSR Bengaluru City (SBC)</option>
+                      <option value="ADI">Ahmedabad Junction (ADI)</option>
+                      <option value="JP">Jaipur Junction (JP)</option>
+                    </optgroup>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group-full">
+                <div class="input-box">
+                  <label>Journey Date</label>
+                  <input type="date" name="date" required />
+                </div>
+                <div class="input-box">
+                  <label>Class</label>
+                  <select name="class">
+                    <option>AC Chair Car (CC)</option>
+                    <option>AC 2 Tier (2A)</option>
+                    <option>AC 3 Tier (3A)</option>
+                    <option>Executive Class (EC)</option>
+                    <option>Sleeper (SL)</option>
+                  </select>
+                </div>
+              </div>
+              <button
+                type="submit"
+                class="search-btn"
+                style="background: #0d9488"
+              >
+                <i class="fa-solid fa-magnifying-glass"></i> Search Trains
+              </button>
+            </form>
+
+            <!-- 3. Bus Form with Major City Bus Terminals -->
+            <form class="travel-form" id="bus-form" onsubmit="handleSearch(event, 'bus')">
+              <div class="form-grid">
+                <div class="input-box">
+                  <label>From City / Stop</label>
+                  <select name="from" required>
+                    <option value="">Departure Terminal</option>
+                    <optgroup label="Major Terminals & Cities">
+                      <option value="Delhi">Delhi (Kashmere Gate ISBT)</option>
+                      <option value="Mumbai">Mumbai (Dadar West Terminal)</option>
+                      <option value="Bengaluru">Bengaluru (Majestic / Shantinagar)</option>
+                      <option value="Pune">Pune (Swargate Bus Stand)</option>
+                      <option value="Hyderabad">Hyderabad (MGBS Bus Station)</option>
+                      <option value="Jaipur">Jaipur (Sindhi Camp)</option>
+                      <option value="Chandigarh">Chandigarh (Sector 43 ISBT)</option>
+                      <option value="Ahmedabad">Ahmedabad (Geeta Mandir ISBT)</option>
+                    </optgroup>
+                  </select>
+                </div>
+                <button
+                  type="button"
+                  class="swap-btn"
+                  onclick="swapValues('bus-form')"
+                  title="Swap Terminals"
+                  style="background: #d97706"
+                >
+                  <i class="fa-solid fa-right-left"></i>
+                </button>
+                <div class="input-box">
+                  <label>To City / Stop</label>
+                  <select name="to" required>
+                    <option value="">Arrival Terminal</option>
+                    <optgroup label="Popular Destinations">
+                      <option value="Manali">Manali (Mall Road Bus Stand)</option>
+                      <option value="Goa">Goa (Panjim Bus Terminal)</option>
+                      <option value="Udaipur">Udaipur (Udaipole Stand)</option>
+                      <option value="Shimla">Shimla (ISBT Tutikandi)</option>
+                      <option value="Pune">Pune (Swargate / Wakad)</option>
+                      <option value="Bengaluru">Bengaluru (Kempegowda BS)</option>
+                      <option value="Mumbai">Mumbai (Borivali East)</option>
+                    </optgroup>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group-full">
+                <div class="input-box">
+                  <label>Journey Date</label>
+                  <input type="date" name="date" required />
+                </div>
+                <div class="input-box">
+                  <label>Seats</label>
+                  <select name="seats">
+                    <option>1 Seat</option>
+                    <option>2 Seats</option>
+                    <option>3 Seats</option>
+                    <option>4 Seats</option>
+                  </select>
+                </div>
+              </div>
+              <button
+                type="submit"
+                class="search-btn"
+                style="background: #d97706"
+              >
+                <i class="fa-solid fa-magnifying-glass"></i> Search Buses
+              </button>
+            </form>
+          </div>
+
+          <!-- Right: Dynamic Animated Visual Panel -->
+          <div class="image-section">
+            <div class="travel-illustration active" id="flight-visual">
+              <i class="fa-solid fa-plane-departure"></i>
+              <h3>Fly High & Save More</h3>
+              <p>
+                Discover domestic & international carriers with secure bookings and zero cancellation fees.
+              </p>
+            </div>
+            <div class="travel-illustration" id="train-visual">
+              <i class="fa-solid fa-train-subway" style="color: #0d9488"></i>
+              <h3>Scenic Rail Journeys</h3>
+              <p>
+                Book confirmed IRCTC tickets effortlessly across Vande Bharat and Rajdhani networks.
+              </p>
+            </div>
+            <div class="travel-illustration" id="bus-visual">
+              <i class="fa-solid fa-bus" style="color: #d97706"></i>
+              <h3>Comfortable Road Trips</h3>
+              <p>
+                Travel in luxury with verified Volvo AC sleepers and live GPS tracking.
+              </p>
+            </div>
+          </div>
         </div>
-      </section>
+      </div>
 
-      <!-- Flight Results -->
+      <!-- ================= FLIGHT RESULTS ================= -->
       <section id="flight-section" class="result-section active">
         <div class="container">
-          <section class="travel-results">
-            <div class="container">
-              <div class="section-title">
-                <h2>Available Flights</h2>
-                <p>Select the flight that best suits your journey.</p>
-              </div>
-              <div class="flight-card">
-                <div class="flight-header">
-                  <div class="airline">
-                    <img src="assets/images/airindia.png" alt="Air India" />
-                    <div>
-                      <h3>Air India</h3>
-                      <p>AI - 302</p>
-                    </div>
-                  </div>
-                  <div class="rating">⭐ 4.8</div>
-                </div>
-                <div class="flight-details">
-                  <div class="departure">
-                    <h2>09:00</h2>
-                    <p>Delhi</p>
-                  </div>
-                  <div class="flight-path">
-                    <p>2h 15m</p>
-                    <div class="plane-line">──────── ✈ ────────</div>
-                    <span>Non Stop • Economy</span>
-                  </div>
-                  <div class="arrival">
-                    <h2>11:15</h2>
-                    <p>Mumbai</p>
-                  </div>
-                </div>
-                <div class="flight-footer">
-                  <div>
-                    <h2>₹7,999</h2>
-                    <p>Per Traveller</p>
-                  </div>
-                  <button class="book-flight">Book Flight</button>
-                </div>
-              </div>
-            </div>
-          </section>
-        </div>
+          <!-- Dynamic Search Banner Injected Here -->
+          <div id="flight-search-banner"></div>
 
-        <div class="container">
-          <section class="travel-results">
-            <div class="container">
-              
-              <div class="flight-card">
-                <div class="flight-header">
-                  <div class="airline">
-                    <img src="assets/images/airindia.png" alt="Air India" />
-                    <div>
-                      <h3>Air India</h3>
-                      <p>AI - 302</p>
-                    </div>
-                  </div>
-                  <div class="rating">⭐ 4.8</div>
-                </div>
-                <div class="flight-details">
-                  <div class="departure">
-                    <h2>09:00</h2>
-                    <p>Delhi</p>
-                  </div>
-                  <div class="flight-path">
-                    <p>2h 15m</p>
-                    <div class="plane-line">──────── ✈ ────────</div>
-                    <span>Non Stop • Economy</span>
-                  </div>
-                  <div class="arrival">
-                    <h2>11:15</h2>
-                    <p>Mumbai</p>
-                  </div>
-                </div>
-                <div class="flight-footer">
-                  <div>
-                    <h2>₹7,999</h2>
-                    <p>Per Traveller</p>
-                  </div>
-                  <button class="book-flight">Book Flight</button>
-                </div>
-              </div>
-            </div>
-          </section>
-        </div>
+          <div class="section-title">
+            <h2>Top Recommended Flights</h2>
+            <p style="color: #64748b">
+              Fastest routes and best airline deals available today.
+            </p>
+          </div>
 
-        <div class="container">
-          <section class="travel-results">
-            <div class="container">
-              
-              <div class="flight-card">
-                <div class="flight-header">
-                  <div class="airline">
-                    <img src="assets/images/airindia.png" alt="Air India" />
-                    <div>
-                      <h3>Air India</h3>
-                      <p>AI - 302</p>
-                    </div>
-                  </div>
-                  <div class="rating">⭐ 4.8</div>
-                </div>
-                <div class="flight-details">
-                  <div class="departure">
-                    <h2>09:00</h2>
-                    <p>Delhi</p>
-                  </div>
-                  <div class="flight-path">
-                    <p>2h 15m</p>
-                    <div class="plane-line">──────── ✈ ────────</div>
-                    <span>Non Stop • Economy</span>
-                  </div>
-                  <div class="arrival">
-                    <h2>11:15</h2>
-                    <p>Mumbai</p>
-                  </div>
-                </div>
-                <div class="flight-footer">
-                  <div>
-                    <h2>₹7,999</h2>
-                    <p>Per Traveller</p>
-                  </div>
-                  <button class="book-flight">Book Flight</button>
+          <div class="flight-card">
+            <div class="flight-header">
+              <div class="airline">
+                <i
+                  class="fa-solid fa-plane-circle-check"
+                  style="font-size: 28px; color: #2563eb"
+                ></i>
+                <div>
+                  <h3>Air India</h3>
+                  <p>AI - 302 • Boeing 787 Dreamliner</p>
                 </div>
               </div>
+              <div class="rating">⭐ 4.8</div>
             </div>
-          </section>
-        </div>
+            <div class="flight-details">
+              <div class="departure">
+                <h2>09:00</h2>
+                <p>New Delhi (DEL)</p>
+              </div>
+              <div class="flight-path">
+                <p>2h 15m</p>
+                <div class="plane-line">──────── ✈ ────────</div>
+                <span>Non Stop • Economy</span>
+              </div>
+              <div class="arrival">
+                <h2>11:15</h2>
+                <p>Mumbai (BOM)</p>
+              </div>
+            </div>
+            <div class="flight-footer">
+              <div>
+                <h2>₹7,999</h2>
+                <p>Per Traveller • Taxes Included</p>
+              </div>
+              <button class="book-flight">Book Flight</button>
+            </div>
+          </div>
 
-        <div class="container">
-          <section class="travel-results">
-            <div class="container">
-              <div class="flight-card">
-                <div class="flight-header">
-                  <div class="airline">
-                    <img src="assets/images/airindia.png" alt="Air India" />
-                    <div>
-                      <h3>Air India</h3>
-                      <p>AI - 302</p>
-                    </div>
-                  </div>
-                  <div class="rating">⭐ 4.8</div>
-                </div>
-                <div class="flight-details">
-                  <div class="departure">
-                    <h2>09:00</h2>
-                    <p>Delhi</p>
-                  </div>
-                  <div class="flight-path">
-                    <p>2h 15m</p>
-                    <div class="plane-line">──────── ✈ ────────</div>
-                    <span>Non Stop • Economy</span>
-                  </div>
-                  <div class="arrival">
-                    <h2>11:15</h2>
-                    <p>Mumbai</p>
-                  </div>
-                </div>
-                <div class="flight-footer">
-                  <div>
-                    <h2>₹7,999</h2>
-                    <p>Per Traveller</p>
-                  </div>
-                  <button class="book-flight">Book Flight</button>
+          <div class="flight-card">
+            <div class="flight-header">
+              <div class="airline">
+                <i
+                  class="fa-solid fa-jet-fighter-up"
+                  style="font-size: 28px; color: #2563eb"
+                ></i>
+                <div>
+                  <h3>Emirates / IndiGo</h3>
+                  <p>EK - 501 • Airbus A380 / A320</p>
                 </div>
               </div>
+              <div class="rating">⭐ 4.9</div>
             </div>
-          </section>
+            <div class="flight-details">
+              <div class="departure">
+                <h2>14:30</h2>
+                <p>New Delhi (DEL)</p>
+              </div>
+              <div class="flight-path">
+                <p>3h 40m</p>
+                <div class="plane-line">──────── ✈ ────────</div>
+                <span>Direct Flight</span>
+              </div>
+              <div class="arrival">
+                <h2>17:10</h2>
+                <p>Dubai (DXB)</p>
+              </div>
+            </div>
+            <div class="flight-footer">
+              <div>
+                <h2>₹18,499</h2>
+                <p>Per Traveller • Taxes Included</p>
+              </div>
+              <button class="book-flight">Book Flight</button>
+            </div>
+          </div>
         </div>
       </section>
 
-      <!-- Train Results -->
+      <!-- ================= TRAIN RESULTS ================= -->
       <section id="train-section" class="result-section">
         <div class="container">
-          <section class="travel-results">
-            <div class="container">
-              <div class="section-title">
-                <h2>Available Trains</h2>
-                <p>Select the train for your journey.</p>
+          <div id="train-search-banner"></div>
+
+          <div class="section-title">
+            <h2>Available Train Options</h2>
+            <p style="color: #64748b">
+              Fast, comfortable, and reliable IRCTC rail journeys.
+            </p>
+          </div>
+
+          <div class="train-card">
+            <div class="train-header">
+              <div class="airline">
+                <i
+                  class="fa-solid fa-train"
+                  style="font-size: 28px; color: #0d9488"
+                ></i>
+                <div>
+                  <h3>Vande Bharat Express</h3>
+                  <p>Train No: 22436 • IRCTC Premium</p>
+                </div>
               </div>
-              <!-- Insert your train cards here -->
+              <div class="tag-badge">AC Chair Car</div>
+              <div class="rating">⭐ 4.9</div>
             </div>
-          </section>
+            <div class="train-details">
+              <div class="departure">
+                <h2>06:00</h2>
+                <p>New Delhi (NDLS)</p>
+              </div>
+              <div class="flight-path">
+                <p>5h 45m</p>
+                <div class="plane-line" style="color: #0d9488">
+                  ──────── 🚆 ────────
+                </div>
+                <span>On Time • Wifi Available</span>
+              </div>
+              <div class="arrival">
+                <h2>11:45</h2>
+                <p>Varanasi Junction (BSB)</p>
+              </div>
+            </div>
+            <div class="train-footer">
+              <div>
+                <h2>₹1,750</h2>
+                <p>Per Passenger • Meals Included</p>
+              </div>
+              <button class="book-flight" style="background: #0d9488">
+                Book Train
+              </button>
+            </div>
+          </div>
+
+          <div class="train-card">
+            <div class="train-header">
+              <div class="airline">
+                <i
+                  class="fa-solid fa-train-subway"
+                  style="font-size: 28px; color: #0d9488"
+                ></i>
+                <div>
+                  <h3>Rajdhani Express</h3>
+                  <p>Train No: 12952 • Superfast</p>
+                </div>
+              </div>
+              <div class="tag-badge" style="background: #2563eb">AC 2 Tier</div>
+              <div class="rating">⭐ 4.7</div>
+            </div>
+            <div class="train-details">
+              <div class="departure">
+                <h2>16:55</h2>
+                <p>New Delhi (NDLS)</p>
+              </div>
+              <div class="flight-path">
+                <p>15h 40m</p>
+                <div class="plane-line" style="color: #0d9488">
+                  ──────── 🚆 ────────
+                </div>
+                <span>Overnight • Catering Onboard</span>
+              </div>
+              <div class="arrival">
+                <h2>08:35</h2>
+                <p>Mumbai Central (MMCT)</p>
+              </div>
+            </div>
+            <div class="train-footer">
+              <div>
+                <h2>₹2,890</h2>
+                <p>Per Passenger • Sleeper Berth</p>
+              </div>
+              <button class="book-flight" style="background: #0d9488">
+                Book Train
+              </button>
+            </div>
+          </div>
         </div>
       </section>
 
-      <!-- Bus Results -->
+      <!-- ================= BUS RESULTS ================= -->
       <section id="bus-section" class="result-section">
         <div class="container">
-          <section class="travel-results">
-            <div class="container">
-              <div class="section-title">
-                <h2>Available Buses</h2>
-                <p>Select the bus for your journey.</p>
+          <div id="bus-search-banner"></div>
+
+          <div class="section-title">
+            <h2>Verified Bus Options</h2>
+            <p style="color: #64748b">
+              Top-rated Volvo AC sleeper and semi-sleeper buses.
+            </p>
+          </div>
+
+          <div class="bus-card">
+            <div class="bus-header">
+              <div class="airline">
+                <i
+                  class="fa-solid fa-bus"
+                  style="font-size: 28px; color: #d97706"
+                ></i>
+                <div>
+                  <h3>ZingBus Premium</h3>
+                  <p>Volvo Multi-Axle AC Sleeper</p>
+                </div>
               </div>
-              <!-- Insert your bus cards here -->
+              <div class="tag-badge" style="background: #d97706">
+                AC Sleeper
+              </div>
+              <div class="rating">⭐ 4.6</div>
             </div>
-          </section>
+            <div class="bus-details">
+              <div class="departure">
+                <h2>21:00</h2>
+                <p>Delhi (Kashmere Gate ISBT)</p>
+              </div>
+              <div class="flight-path">
+                <p>12h 30m</p>
+                <div class="plane-line" style="color: #d97706">
+                  ──────── 🚌 ────────
+                </div>
+                <span>Live GPS • Blankets Provided</span>
+              </div>
+              <div class="arrival">
+                <h2>09:30</h2>
+                <p>Manali (Mall Road Bus Stand)</p>
+              </div>
+            </div>
+            <div class="bus-footer">
+              <div>
+                <h2>₹1,299</h2>
+                <p>Per Seat • Amenities Onboard</p>
+              </div>
+              <button class="book-flight" style="background: #d97706">
+                Book Bus
+              </button>
+            </div>
+          </div>
+
+          <div class="bus-card">
+            <div class="bus-header">
+              <div class="airline">
+                <i
+                  class="fa-solid fa-bus-alt"
+                  style="font-size: 28px; color: #d97706"
+                ></i>
+                <div>
+                  <h3>IntrCity SmartBus</h3>
+                  <p>Scania AC Semi-Sleeper</p>
+                </div>
+              </div>
+              <div class="tag-badge" style="background: #0284c7">Smart Bus</div>
+              <div class="rating">⭐ 4.7</div>
+            </div>
+            <div class="bus-details">
+              <div class="departure">
+                <h2>22:15</h2>
+                <p>Bengaluru (Majestic)</p>
+              </div>
+              <div class="flight-path">
+                <p>8h 45m</p>
+                <div class="plane-line" style="color: #d97706">
+                  ──────── 🚌 ────────
+                </div>
+                <span>Onboard Restroom • Verified Driver</span>
+              </div>
+              <div class="arrival">
+                <h2>07:00</h2>
+                <p>Goa (Panjim Bus Terminal)</p>
+              </div>
+            </div>
+            <div class="bus-footer">
+              <div>
+                <h2>₹999</h2>
+                <p>Per Seat • Mineral Water Included</p>
+              </div>
+              <button class="book-flight" style="background: #d97706">
+                Book Bus
+              </button>
+            </div>
+          </div>
         </div>
       </section>
-      
-      <footer>
-        <div class="container footer-container">
-          <div class="footer-about">
-            <h2>BookVerse</h2>
-            <p>One Platform. Every Booking.</p>
-          </div>
-          <div class="footer-links">
-            <h3>Quick Links</h3>
-            <a href="index.html">Home</a>
-            <a href="travel.html">Travel</a>
-            <a href="entertainment.html">Entertainment</a>
-            <a href="restaurant.html">Restaurant</a>
-          </div>
-          <div class="footer-contact">
-            <h3>Contact</h3>
-            <p>bookverse@gmail.com</p>
-            <p>+91 9876543210</p>
-          </div>
-        </div>
-        <div class="copyright">© 2026 BookVerse. All Rights Reserved.</div>
-      </footer>
-
-      <script src="js/script.js"></script>
     </main>
 
+    <!-- Footer -->
+    <footer>
+      <div class="container footer-container">
+        <div class="footer-about">
+          <h2>BookVerse</h2>
+          <p>
+            One Platform. Every Booking. Explore flights, trains, and buses effortlessly.
+          </p>
+        </div>
+        <div class="footer-links">
+          <h3>Quick Links</h3>
+          <a href="index.html">Home</a>
+          <a href="travel.html">Travel</a>
+          <a href="entertainment.html">Entertainment</a>
+          <a href="restaurant.html">Restaurant</a>
+        </div>
+        <div class="footer-contact">
+          <h3>Contact Support</h3>
+          <p>support@bookverse.com</p>
+          <p>+91 98765 43210</p>
+        </div>
+      </div>
+      <div class="copyright">© 2026 BookVerse. All Rights Reserved.</div>
+    </footer>
+
+    <!-- Interactive Search Handler & Tab Switcher Script -->
     <script>
-      // Function to handle tab switching on the same page
       function switchTab(event, type) {
-        // 1. Remove 'active' class from all tab buttons
-        const tabBtns = document.querySelectorAll('.tab-btn');
-        tabBtns.forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll(".booking-types button").forEach((btn) => btn.classList.remove("active"));
+        event.currentTarget.classList.add("active");
 
-        // 2. Add 'active' class to the clicked button
-        event.currentTarget.classList.add('active');
+        document.querySelectorAll(".travel-form").forEach((form) => form.classList.remove("active"));
+        document.getElementById(type + "-form").classList.add("active");
 
-        // 3. Hide all forms and show the target form
-        const forms = document.querySelectorAll('.tab-content');
-        forms.forEach(form => form.classList.remove('active'));
-        document.getElementById(type + '-form').classList.add('active');
+        document.querySelectorAll(".result-section").forEach((section) => section.classList.remove("active"));
+        document.getElementById(type + "-section").classList.add("active");
 
-        // 4. Hide all result sections and show the target section
-        const sections = document.querySelectorAll('.result-section');
-        sections.forEach(section => section.classList.remove('active'));
-        document.getElementById(type + '-section').classList.add('active');
+        document.querySelectorAll(".travel-illustration").forEach((vis) => vis.classList.remove("active"));
+        document.getElementById(type + "-visual").classList.add("active");
       }
 
-      // Function to swap "From" and "To" values for the currently active form
       function swapValues(formId) {
         const form = document.getElementById(formId);
         const from = form.querySelector('select[name="from"]');
         const to = form.querySelector('select[name="to"]');
+        if (from && to) {
+          let temp = from.value;
+          from.value = to.value;
+          to.value = temp;
+        }
+      }
+
+      // Handle Search Process: Updates result titles dynamically & scrolls to cards
+      function handleSearch(event, type) {
+        event.preventDefault();
+        const form = event.target;
+        const fromSelect = form.querySelector('select[name="from"]');
+        const toSelect = form.querySelector('select[name="to"]');
+        const dateInput = form.querySelector('input[type="date"]');
+
+        const fromText = fromSelect.options[fromSelect.selectedIndex].text || "Origin";
+        const toText = toSelect.options[toSelect.selectedIndex].text || "Destination";
+        const dateText = dateInput.value || "Selected Date";
+
+        const targetSection = document.getElementById(type + "-section");
+
+        // 1. Update departure/arrival tags in cards dynamically
+        targetSection.querySelectorAll(".departure p").forEach(p => p.innerText = fromText);
+        targetSection.querySelectorAll(".arrival p").forEach(p => p.innerText = toText);
+
+        // 2. Display dynamic search summary banner
+        const bannerContainer = document.getElementById(type + "-search-banner");
+        if (bannerContainer) {
+          bannerContainer.innerHTML = `
+            <div class="bv-search-bar-status">
+              <span><i class="fa-solid fa-circle-check"></i> Showing available ${type}s for <strong>${fromText}</strong> ➔ <strong>${toText}</strong> on <strong>${dateText}</strong></span>
+              <span style="font-size: 12px; opacity: 0.8;">2 Verified Options Found</span>
+            </div>
+          `;
+        }
+
+        // 3. Smooth scroll down to results section
+        targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    </script>
+
+    <!-- ================= BOOKING & MY BOOKINGS MODALS ================= -->
+    
+    <!-- 1. Interactive Booking Flow Modal -->
+    <div class="bv-modal-overlay" id="bv-booking-modal">
+      <div class="bv-modal-box">
+        <div class="bv-modal-header">
+          <h3 id="bv-modal-title"><i class="fa-solid fa-ticket"></i> Complete Your Booking</h3>
+          <button class="bv-modal-close" onclick="closeBookingModal()">&times;</button>
+        </div>
+        <div class="bv-modal-body">
+          <!-- Step Indicator -->
+          <div class="bv-steps">
+            <div class="bv-step active" id="bv-step-1">1</div>
+            <div class="bv-step" id="bv-step-2">2</div>
+            <div class="bv-step" id="bv-step-3">3</div>
+          </div>
+
+          <!-- Active Transport Overview -->
+          <div class="bv-summary-card">
+            <div class="bv-summary-header">
+              <span id="bv-summary-title">Air India (AI - 302)</span>
+              <span id="bv-summary-price" style="color: #2563eb; font-size: 18px;">₹7,999</span>
+            </div>
+            <div class="bv-summary-route">
+              <span id="bv-summary-from">New Delhi (DEL)</span>
+              <i class="fa-solid fa-arrow-right" style="color: #94a3b8; font-size: 13px;"></i>
+              <span id="bv-summary-to">Mumbai (BOM)</span>
+              <span style="margin-left: auto; color: #64748b; font-size: 13px;" id="bv-summary-date">Date: Tomorrow</span>
+            </div>
+          </div>
+
+          <!-- Step 1: Passenger Info Form -->
+          <div id="bv-view-passenger">
+            <h4 style="margin-bottom: 15px; color: #0f172a;">Passenger Details</h4>
+            <form onsubmit="handlePassengerSubmit(event)">
+              <div class="bv-form-grid">
+                <div class="bv-form-group">
+                  <label>Full Name</label>
+                  <input type="text" id="bv-passenger-name" placeholder="e.g. Rahul Sharma" required />
+                </div>
+                <div class="bv-form-group">
+                  <label>Age</label>
+                  <input type="number" id="bv-passenger-age" min="1" max="100" placeholder="e.g. 26" required />
+                </div>
+                <div class="bv-form-group">
+                  <label>Gender</label>
+                  <select id="bv-passenger-gender" required>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+                <div class="bv-form-group">
+                  <label>Phone Number</label>
+                  <input type="tel" id="bv-passenger-phone" placeholder="+91 9876543210" required />
+                </div>
+                <div class="bv-form-group full">
+                  <label>Email Address (For E-Ticket Delivery)</label>
+                  <input type="email" id="bv-passenger-email" placeholder="rahul@example.com" required />
+                </div>
+              </div>
+              <button type="submit" class="bv-btn-primary">Proceed to Payment <i class="fa-solid fa-arrow-right"></i></button>
+            </form>
+          </div>
+
+          <!-- Step 2: Payment Gateway -->
+          <div id="bv-view-payment" style="display: none;">
+            <h4 style="margin-bottom: 15px; color: #0f172a;">Select Payment Method</h4>
+            <div class="bv-pay-options">
+              <div class="bv-pay-option selected" onclick="selectPayOption(this)">
+                <i class="fa-solid fa-credit-card"></i>
+                <span style="font-size: 12px; font-weight: 600;">Card</span>
+              </div>
+              <div class="bv-pay-option" onclick="selectPayOption(this)">
+                <i class="fa-solid fa-mobile-screen-button"></i>
+                <span style="font-size: 12px; font-weight: 600;">UPI</span>
+              </div>
+              <div class="bv-pay-option" onclick="selectPayOption(this)">
+                <i class="fa-solid fa-building-columns"></i>
+                <span style="font-size: 12px; font-weight: 600;">NetBanking</span>
+              </div>
+            </div>
+
+            <form onsubmit="handlePaymentSubmit(event)">
+              <div class="bv-form-group">
+                <label>Card / UPI Details</label>
+                <input type="text" placeholder="4532 •••• •••• 8921 or user@upi" required />
+              </div>
+              <div class="bv-form-grid">
+                <div class="bv-form-group">
+                  <label>Expiry Date</label>
+                  <input type="text" placeholder="MM/YY" />
+                </div>
+                <div class="bv-form-group">
+                  <label>CVV</label>
+                  <input type="password" maxlength="3" placeholder="•••" />
+                </div>
+              </div>
+              <button type="submit" class="bv-btn-primary" id="bv-pay-btn" style="background: #10b981;">
+                <i class="fa-solid fa-lock"></i> Pay & Confirm Ticket
+              </button>
+            </form>
+          </div>
+
+          <!-- Step 3: Success Ticket View -->
+          <div id="bv-view-success" style="display: none; text-align: center;">
+            <div style="font-size: 54px; color: #10b981; margin-bottom: 10px;">
+              <i class="fa-solid fa-circle-check"></i>
+            </div>
+            <h3 style="color: #0f172a; margin-bottom: 5px;">Booking Confirmed!</h3>
+            <p style="color: #64748b; font-size: 14px; margin-bottom: 20px;">Your ticket has been generated and saved under 'My Bookings'.</p>
+
+            <div class="bv-ticket-card" id="bv-success-ticket-render" style="text-align: left;">
+              <!-- Dynamic Content Injected Here -->
+            </div>
+
+            <button onclick="closeBookingModal(); openMyBookingsModal();" class="bv-btn-primary">
+              View All My Bookings
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. My Bookings Drawer/Modal -->
+    <div class="bv-modal-overlay" id="bv-my-bookings-modal">
+      <div class="bv-modal-box">
+        <div class="bv-modal-header">
+          <h3><i class="fa-solid fa-ticket"></i> My Booked Tickets</h3>
+          <button class="bv-modal-close" onclick="closeMyBookingsModal()">&times;</button>
+        </div>
+        <div class="bv-modal-body" id="bv-bookings-list">
+          <!-- Dynamically populated from localStorage -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Script Handling Booking Process & LocalStorage -->
+    <script>
+      let currentBookingData = {};
+
+      document.addEventListener("DOMContentLoaded", () => {
+        attachBookingListeners();
+      });
+
+      function attachBookingListeners() {
+        document.querySelectorAll(".book-flight").forEach((btn) => {
+          btn.addEventListener("click", function(e) {
+            e.preventDefault();
+            
+            const card = this.closest(".flight-card, .train-card, .bus-card");
+            const transportType = card.classList.contains("flight-card") ? "Flight" :
+                                 card.classList.contains("train-card") ? "Train" : "Bus";
+
+            const title = card.querySelector("h3") ? card.querySelector("h3").innerText : "BookVerse Travel";
+            const price = card.querySelector("h2") ? card.querySelector("h2").innerText : "₹1,000";
+            
+            const activeForm = document.querySelector(".travel-form.active");
+            let fromVal = card.querySelector(".departure p")?.innerText || "Origin";
+            let toVal = card.querySelector(".arrival p")?.innerText || "Destination";
+            let dateVal = activeForm.querySelector('input[type="date"]')?.value;
+
+            if (!dateVal) {
+              const today = new Date();
+              today.setDate(today.getDate() + 1);
+              dateVal = today.toISOString().split('T')[0];
+            }
+
+            currentBookingData = {
+              type: transportType,
+              title: title,
+              price: price,
+              from: fromVal,
+              to: toVal,
+              date: dateVal,
+              time: card.querySelector(".departure h2")?.innerText || "10:00 AM",
+              pnr: "BV-" + transportType.substring(0,2).toUpperCase() + "-" + Math.floor(100000 + Math.random() * 900000)
+            };
+
+            openBookingModal();
+          });
+        });
+      }
+
+      function openBookingModal() {
+        document.getElementById("bv-summary-title").innerText = currentBookingData.title;
+        document.getElementById("bv-summary-price").innerText = currentBookingData.price;
+        document.getElementById("bv-summary-from").innerText = currentBookingData.from;
+        document.getElementById("bv-summary-to").innerText = currentBookingData.to;
+        document.getElementById("bv-summary-date").innerText = "Date: " + currentBookingData.date;
+
+        showStep(1);
+
+        const modal = document.getElementById("bv-booking-modal");
+        modal.classList.add("active");
+      }
+
+      function closeBookingModal() {
+        document.getElementById("bv-booking-modal").classList.remove("active");
+      }
+
+      function showStep(stepNum) {
+        document.getElementById("bv-step-1").className = "bv-step " + (stepNum >= 1 ? (stepNum > 1 ? "completed" : "active") : "");
+        document.getElementById("bv-step-2").className = "bv-step " + (stepNum >= 2 ? (stepNum > 2 ? "completed" : "active") : "");
+        document.getElementById("bv-step-3").className = "bv-step " + (stepNum === 3 ? "active completed" : "");
+
+        document.getElementById("bv-view-passenger").style.display = stepNum === 1 ? "block" : "none";
+        document.getElementById("bv-view-payment").style.display = stepNum === 2 ? "block" : "none";
+        document.getElementById("bv-view-success").style.display = stepNum === 3 ? "block" : "none";
+      }
+
+      function handlePassengerSubmit(e) {
+        e.preventDefault();
+        currentBookingData.passenger = {
+          name: document.getElementById("bv-passenger-name").value,
+          age: document.getElementById("bv-passenger-age").value,
+          gender: document.getElementById("bv-passenger-gender").value,
+          phone: document.getElementById("bv-passenger-phone").value,
+          email: document.getElementById("bv-passenger-email").value
+        };
+
+        document.getElementById("bv-pay-btn").innerHTML = `<i class="fa-solid fa-lock"></i> Pay ${currentBookingData.price} & Confirm`;
+        showStep(2);
+      }
+
+      function selectPayOption(element) {
+        document.querySelectorAll(".bv-pay-option").forEach(opt => opt.classList.remove("selected"));
+        element.classList.add("selected");
+      }
+
+      function handlePaymentSubmit(e) {
+        e.preventDefault();
         
-        let temp = from.value;
-        from.value = to.value;
-        to.value = temp;
+        let existingBookings = JSON.parse(localStorage.getItem("bookverse_bookings") || "[]");
+        existingBookings.unshift(currentBookingData);
+        localStorage.setItem("bookverse_bookings", JSON.stringify(existingBookings));
+
+        const ticketRender = document.getElementById("bv-success-ticket-render");
+        ticketRender.innerHTML = `
+          <span class="bv-ticket-badge">${currentBookingData.type} TICKET</span>
+          <span class="bv-ticket-pnr">PNR: ${currentBookingData.pnr}</span>
+          <h4 style="margin: 5px 0; color:#0f172a;">${currentBookingData.title}</h4>
+          <p style="font-size: 13px; color: #64748b; margin-bottom: 10px;">
+            <strong>Passenger:</strong> ${currentBookingData.passenger.name} (${currentBookingData.passenger.gender}, ${currentBookingData.passenger.age} yrs)
+          </p>
+          <div style="display: flex; justify-content: space-between; font-size: 13px; background: #f8fafc; padding: 10px; border-radius: 8px;">
+            <div><strong>From:</strong> ${currentBookingData.from}</div>
+            <div><strong>To:</strong> ${currentBookingData.to}</div>
+            <div><strong>Date:</strong> ${currentBookingData.date}</div>
+          </div>
+        `;
+
+        showStep(3);
+      }
+
+      /* My Bookings Functionality */
+      function openMyBookingsModal() {
+        const bookingsListContainer = document.getElementById("bv-bookings-list");
+        let bookings = JSON.parse(localStorage.getItem("bookverse_bookings") || "[]");
+
+        if (bookings.length === 0) {
+          bookingsListContainer.innerHTML = `
+            <div class="bv-empty-state">
+              <i class="fa-solid fa-ticket-simple"></i>
+              <h3>No Bookings Found</h3>
+              <p>You haven't booked any flights, trains, or buses yet.</p>
+            </div>
+          `;
+        } else {
+          bookingsListContainer.innerHTML = bookings.map((item, index) => `
+            <div class="bv-ticket-card">
+              <span class="bv-ticket-badge">${item.type}</span>
+              <span class="bv-ticket-pnr">PNR: ${item.pnr}</span>
+              <h4 style="color:#0f172a; margin-bottom: 4px;">${item.title}</h4>
+              <p style="font-size: 13px; color:#475569; margin-bottom: 8px;">
+                <i class="fa-solid fa-user"></i> ${item.passenger ? item.passenger.name : 'Passenger'} • 
+                <i class="fa-solid fa-calendar"></i> ${item.date} • 
+                <i class="fa-solid fa-clock"></i> ${item.time}
+              </p>
+              <div style="font-size: 14px; color:#1e293b; font-weight: 500;">
+                ${item.from} <i class="fa-solid fa-arrow-right" style="font-size: 11px; color:#94a3b8;"></i> ${item.to}
+              </div>
+              <div style="display:flex; justify-content: space-between; align-items:center; margin-top: 10px;">
+                <span style="font-size: 16px; font-weight:700; color:#2563eb;">${item.price}</span>
+                <button class="bv-cancel-btn" onclick="cancelBooking(${index})"><i class="fa-solid fa-trash"></i> Cancel Ticket</button>
+              </div>
+            </div>
+          `).join('');
+        }
+
+        document.getElementById("bv-my-bookings-modal").classList.add("active");
+      }
+
+      function closeMyBookingsModal() {
+        document.getElementById("bv-my-bookings-modal").classList.remove("active");
+      }
+
+      function cancelBooking(index) {
+        if (confirm("Are you sure you want to cancel this booking?")) {
+          let bookings = JSON.parse(localStorage.getItem("bookverse_bookings") || "[]");
+          bookings.splice(index, 1);
+          localStorage.setItem("bookverse_bookings", JSON.stringify(bookings));
+          openMyBookingsModal();
+        }
       }
     </script>
   </body>

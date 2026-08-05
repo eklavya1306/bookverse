@@ -1,42 +1,231 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>BookVerse | One Platform. Every Booking.</title>        
-        <link rel="stylesheet" href="css/style.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-        <link rel="icon" href="assets/images/logo.png">
-        <link rel="stylesheet" href="css/home.css">
-    </head>
-    <body>
-        <header>
-            <div class="container">
-            <nav class="navbar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | BookVerse</title>        
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="assets/images/logo.png">
+    <link rel="stylesheet" href="css/contact.css">
+    <link rel="stylesheet" href="css/style.css">
+    
+    
+</head>
+<body>
 
-            <div class="logo">
+    <!-- Header / Navbar -->
+    <header>
+      <div class="container">
+        <nav class="navbar">
+          <div class="logo">
+            <a href="index.html" class="logo-text">
+              <i class="fa-solid fa-location-dot"></i>
+              BookVerse
+            </a>
+          </div>
+
+          <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="travel.html">Travel</a></li>
+            <li><a href="entertainment.html">Entertainment</a></li>
+            <li><a href="restaurant.html">Restaurant</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+
+          <div class="nav-buttons">
+            <a href="login.html" class="login-btn">Login</a>
+            <a href="register.html" class="register-btn">Register</a>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="contact-hero">
+        <div class="container">
+            <h1>We're Here to Help</h1>
+            <p>Have questions about your booking, need assistance, or just want to share feedback? Get in touch with the BookVerse team.</p>
+        </div>
+    </section>
+
+    <!-- Contact Details & Form Section -->
+    <section class="container">
+        <div class="contact-wrapper">
+            
+            <!-- Left: Contact Details -->
+            <div class="contact-info-panel">
+                <h3 class="info-panel-title">Get In Touch</h3>
                 
-                <a href="index.html" class="logo-text">
-                    <i class="fa-solid fa-location-dot"></i>
-                    BookVerse
-                </a>
+                <div class="info-card">
+                    <div class="info-icon">
+                        <i class="fa-solid fa-headset"></i>
+                    </div>
+                    <div class="info-details">
+                        <h4>Customer Support</h4>
+                        <p>24/7 Dedicated Support Line</p>
+                        <a href="tel:+18005550199">+1 (800) 555-0199</a>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-icon">
+                        <i class="fa-solid fa-envelope"></i>
+                    </div>
+                    <div class="info-details">
+                        <h4>Email Us</h4>
+                        <p>Our team usually responds within 2 hours</p>
+                        <a href="mailto:support@bookverse.com">support@bookverse.com</a>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-icon">
+                        <i class="fa-solid fa-location-dot"></i>
+                    </div>
+                    <div class="info-details">
+                        <h4>Headquarters</h4>
+                        <p>100 BookVerse Tower, Tech District<br>Mumbai, Maharashtra 400001</p>
+                    </div>
+                </div>
+
+                <div class="social-links-container">
+                    <h5>Follow Us</h5>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon"><i class="fa-brands fa-x-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fa-brands fa-linkedin-in"></i></a>
+                    </div>
+                </div>
             </div>
 
-            <ul class="nav-links">
-                <li><a href="index.html" >Home</a></li>
-                <li><a href="travel.html">Travel</a></li>
-                <li><a href="entertainment.html">Entertainment</a></li>
-                <li><a href="restaurant.html">Restaurant</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
+            <!-- Right: Interactive Contact Form -->
+            <div class="contact-form-panel">
+                <h3 class="info-panel-title" style="margin-bottom: 20px;">Send Us a Message</h3>
+                
+                <form id="contactForm" onsubmit="event.preventDefault(); alert('Thank you! Your message has been sent successfully.');">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="fullName">Full Name</label>
+                            <input type="text" id="fullName" placeholder="John Doe" required>
+                        </div>
 
-            <div class="nav-buttons">
-                <a href="login.html" class="login-btn">Login</a>
-                <a href="register.html" class="register-btn">Register</a>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" placeholder="john@example.com" required>
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" placeholder="+91 98765 43210">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="category">Booking Category</label>
+                            <select id="category" required>
+                                <option value="" disabled selected>Select Category</option>
+                                <option value="travel">Travel (Flight/Bus/Hotel)</option>
+                                <option value="entertainment">Entertainment (Movie/Concert)</option>
+                                <option value="restaurant">Restaurant Reservation</option>
+                                <option value="general">General Query</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" placeholder="How can we help you?" required>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="message">Your Message</label>
+                        <textarea id="message" placeholder="Provide as many details as possible..." required></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </form>
             </div>
 
-            </nav>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Frequently Asked Questions</h2>
+                <p>Quick answers to common questions regarding bookings and support.</p>
             </div>
-        </header>
-    </body>
+
+            <div class="faq-grid">
+                <div class="faq-card">
+                    <h4><i class="fa-solid fa-circle-question"></i> How do I modify or cancel a booking?</h4>
+                    <p>Log in to your BookVerse account, go to "My Bookings", select the ticket or reservation, and click on "Manage / Cancel Booking".</p>
+                </div>
+
+                <div class="faq-card">
+                    <h4><i class="fa-solid fa-circle-question"></i> When will I get my refund?</h4>
+                    <p>Refunds are processed automatically within 24 hours of cancellation and typically reflect in your bank account within 3–5 business days.</p>
+                </div>
+
+                <div class="faq-card">
+                    <h4><i class="fa-solid fa-circle-question"></i> How do I present my e-ticket?</h4>
+                    <p>You can show the QR code received on your registered email address or access it directly inside the BookVerse mobile app.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo-text">
+                        <i class="fa-solid fa-location-dot"></i>
+                        BookVerse
+                    </a>
+                    <p>One Platform. Every Booking. Experience seamless travel, entertainment, and restaurant reservations all in one place.</p>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="travel.html">Travel</a></li>
+                        <li><a href="entertainment.html">Entertainment</a></li>
+                        <li><a href="restaurant.html">Restaurants</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="contact.html">Help Center</a></li>
+                        <li><a href="#">Cancellation Policy</a></li>
+                        <li><a href="#">Refund Status</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Categories</h4>
+                    <ul>
+                        <li><a href="travel.html">Flights & Hotels</a></li>
+                        <li><a href="entertainment.html">Movies & Shows</a></li>
+                        <li><a href="entertainment.html">Concerts & Sports</a></li>
+                        <li><a href="restaurant.html">Dining & Tables</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 BookVerse Inc. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
 </html>

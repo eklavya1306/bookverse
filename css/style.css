@@ -1,3 +1,78 @@
+/* ==========================================
+   NAVBAR
+========================================== */
+
+.navbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    height:80px;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.logo img{
+    width:45px;
+}
+
+.logo-text{
+    font-size:28px;
+    font-weight:700;
+    color:var(--primary);
+}
+
+.nav-links{
+    display:flex;
+    gap:35px;
+}
+
+.nav-links a{
+    font-size:16px;
+    font-weight:500;
+    transition:.3s;
+}
+
+.nav-links a:hover{
+    color:var(--primary);
+}
+
+.nav-buttons{
+    display:flex;
+    gap:15px;
+}
+
+/* Login Button */
+
+.login-btn{
+    border:2px solid var(--primary);
+    color:var(--primary);
+    padding:10px 22px;
+    border-radius:8px;
+    transition:.3s;
+}
+
+.login-btn:hover{
+    background:var(--primary);
+    color:white;
+}
+
+/* Register Button */
+
+.register-btn{
+    background:var(--primary);
+    color:white;
+    padding:10px 22px;
+    border-radius:8px;
+    transition:.3s;
+}
+
+.register-btn:hover{
+    background:#1d4ed8;
+}
 /* ===========================
    GOOGLE FONT
 =========================== */
