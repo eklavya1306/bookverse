@@ -11,7 +11,130 @@
     <link rel="icon" href="assets/images/logo.png" />
     <link rel="stylesheet" href="css/restaurant.css" />
     <link rel="stylesheet" href="css/style.css" />
-    
+
+    <style>
+      /* My Bookings Nav Badge & Drawer Styling */
+      .nav-links li {
+        position: relative;
+      }
+
+      .booking-badge {
+        background-color: #ef4444;
+        color: #ffffff;
+        font-size: 11px;
+        font-weight: bold;
+        padding: 2px 6px;
+        border-radius: 10px;
+        margin-left: 4px;
+        vertical-align: middle;
+      }
+
+      /* Bookings Drawer Modal */
+      .bookings-drawer-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        z-index: 2000;
+        justify-content: flex-end;
+      }
+
+      .bookings-drawer-overlay.active {
+        display: flex;
+      }
+
+      .bookings-drawer {
+        background: #ffffff;
+        width: 100%;
+        max-width: 420px;
+        height: 100%;
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+        display: flex;
+        flex-direction: column;
+        animation: slideInRight 0.3s ease-in-out;
+      }
+
+      @keyframes slideInRight {
+        from {
+          transform: translateX(100%);
+        }
+        to {
+          transform: translateX(0);
+        }
+      }
+
+      .drawer-header {
+        padding: 20px;
+        background: var(--primary-blue, #1e3a8a);
+        color: #ffffff;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .drawer-header h2 {
+        margin: 0;
+        font-size: 20px;
+      }
+
+      .close-drawer {
+        font-size: 24px;
+        cursor: pointer;
+        color: #ffffff;
+      }
+
+      .drawer-body {
+        padding: 20px;
+        overflow-y: auto;
+        flex: 1;
+      }
+
+      .booking-card-item {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 15px;
+        position: relative;
+      }
+
+      .booking-card-item h4 {
+        margin: 0 0 5px 0;
+        color: #1e293b;
+        font-size: 16px;
+      }
+
+      .booking-card-item p {
+        margin: 4px 0;
+        font-size: 13px;
+        color: #64748b;
+      }
+
+      .booking-card-item .cancel-btn {
+        margin-top: 10px;
+        background: #fee2e2;
+        color: #dc2626;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 4px;
+        font-size: 12px;
+        cursor: pointer;
+        font-weight: 600;
+      }
+
+      .booking-card-item .cancel-btn:hover {
+        background: #fca5a5;
+      }
+
+      .empty-bookings-msg {
+        text-align: center;
+        color: #94a3b8;
+        margin-top: 40px;
+      }
+    </style>
   </head>
   <body>
     <!-- Header Navigation -->
@@ -29,6 +152,11 @@
             <li><a href="travel.html">Travel</a></li>
             <li><a href="entertainment.html">Entertainment</a></li>
             <li><a href="restaurant.html" class="active">Restaurant</a></li>
+            <li>
+              <a href="javascript:void(0)" onclick="openMyBookings()">
+                My Bookings <span id="nav-booking-count" class="booking-badge">0</span>
+              </a>
+            </li>
             <li><a href="contact.html">Contact</a></li>
           </ul>
           <div class="nav-buttons">
@@ -209,7 +337,7 @@
 
         <!-- ALL REMAINING RESTAURANTS SECTION -->
         <div class="section-header">
-          <i class="fa-solidlist" style="color: var(--primary-blue)"></i> All
+          <i class="fa-solid fa-utensils" style="color: var(--primary-blue)"></i> All
           Available Restaurants
         </div>
 
@@ -436,6 +564,21 @@
     </div>
 
     <!-- ========================================= -->
+    <!-- MY BOOKINGS DRAWER MODAL                  -->
+    <!-- ========================================= -->
+    <div class="bookings-drawer-overlay" id="bookingsDrawer">
+      <div class="bookings-drawer">
+        <div class="drawer-header">
+          <h2><i class="fa-solid fa-utensils"></i> My Reservations</h2>
+          <span class="close-drawer" onclick="closeMyBookings()">&times;</span>
+        </div>
+        <div class="drawer-body" id="drawer-bookings-list">
+          <!-- Bookings loaded dynamically -->
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================= -->
     <!-- JAVASCRIPT LOGIC                          -->
     <!-- ========================================= -->
     <script>
@@ -578,13 +721,22 @@
           return;
         }
 
+        // Save Booking Details
+        const newBooking = {
+          id: Date.now(),
+          restaurant: selectedResto,
+          location: selectedLoc,
+          datetime: `${dateVal} at ${selectedTimeSlot}`,
+          guests: `${guestVal} Guests`
+        };
+
+        saveBooking(newBooking);
+
         // Populate Pass Details
         document.getElementById("pass-resto-name").textContent = selectedResto;
         document.getElementById("pass-location").textContent = selectedLoc;
-        document.getElementById("pass-datetime").textContent =
-          `${dateVal} at ${selectedTimeSlot}`;
-        document.getElementById("pass-guests").textContent =
-          `${guestVal} Guests`;
+        document.getElementById("pass-datetime").textContent = newBooking.datetime;
+        document.getElementById("pass-guests").textContent = newBooking.guests;
 
         // Switch to confirmation step
         document
@@ -593,10 +745,72 @@
         document.getElementById("step-confirmation").classList.add("active");
       }
 
+      // My Bookings Storage & Management
+      function getBookings() {
+        return JSON.parse(localStorage.getItem("my_resto_bookings") || "[]");
+      }
+
+      function saveBooking(booking) {
+        const bookings = getBookings();
+        bookings.push(booking);
+        localStorage.setItem("my_resto_bookings", JSON.stringify(bookings));
+        updateNavBadge();
+      }
+
+      function deleteBooking(id) {
+        let bookings = getBookings();
+        bookings = bookings.filter(b => b.id !== id);
+        localStorage.setItem("my_resto_bookings", JSON.stringify(bookings));
+        updateNavBadge();
+        renderBookingsDrawer();
+      }
+
+      function updateNavBadge() {
+        const bookings = getBookings();
+        document.getElementById("nav-booking-count").textContent = bookings.length;
+      }
+
+      function openMyBookings() {
+        renderBookingsDrawer();
+        document.getElementById("bookingsDrawer").classList.add("active");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeMyBookings() {
+        document.getElementById("bookingsDrawer").classList.remove("active");
+        document.body.style.overflow = "auto";
+      }
+
+      function renderBookingsDrawer() {
+        const listContainer = document.getElementById("drawer-bookings-list");
+        const bookings = getBookings();
+
+        if (bookings.length === 0) {
+          listContainer.innerHTML = `<div class="empty-bookings-msg"><i class="fa-solid fa-calendar-xmark" style="font-size: 32px; margin-bottom: 10px;"></i><p>No table reservations found yet.</p></div>`;
+          return;
+        }
+
+        listContainer.innerHTML = bookings.map(b => `
+          <div class="booking-card-item">
+            <h4>${b.restaurant}</h4>
+            <p><i class="fa-solid fa-location-dot"></i> ${b.location}</p>
+            <p><i class="fa-regular fa-calendar"></i> ${b.datetime}</p>
+            <p><i class="fa-solid fa-users"></i> ${b.guests}</p>
+            <button class="cancel-btn" onclick="deleteBooking(${b.id})"><i class="fa-solid fa-trash"></i> Cancel Reservation</button>
+          </div>
+        `).join("");
+      }
+
+      // Initial Badge Load
+      document.addEventListener("DOMContentLoaded", updateNavBadge);
+
       // Close modal when clicking outside
       window.onclick = function (event) {
         if (event.target == modal) {
           closeBookingModal();
+        }
+        if (event.target == document.getElementById("bookingsDrawer")) {
+          closeMyBookings();
         }
       };
     </script>

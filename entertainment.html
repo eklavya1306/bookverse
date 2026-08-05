@@ -2,177 +2,727 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BookVerse | One Platform. Every Booking.</title>
-    <link rel="stylesheet" href="css/style.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
-    <link rel="icon" href="assets/images/logo.png" />
-    <link rel="stylesheet" href="css/home.css" />
-    <link rel="stylesheet" href="css/entertain.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BookVerse | One Platform. Every Booking.</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="icon" href="assets/images/logo.png" />
+  <link rel="stylesheet" href="css/entertain.css" />
+  <link rel="stylesheet" href="css/style.css" />
  
+<style>
+    :root {
+      --primary-blue: #2563eb;
+      --primary-dark: #0f172a;
+      --secondary-orange: #f97316;
+      --accent-purple: #8b5cf6;
+      --bg-dark: #0f172a;
+      --bg-light: #f8fafc;
+      --text-dark: #1e293b;
+      --text-light: #64748b;
+      --seat-available: #cbd5e1;
+      --seat-selected: #10b981;
+      --seat-sold: #ef4444;
+      --seat-recliner: #f59e0b;
+      --seat-premium: #3b82f6;
+      --seat-vip: #8b5cf6;
+      --seat-cheap: #94a3b8;
+    }
+
+    
+
+    /* --- Hero Section --- */
+    .resto-hero {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+      color: white;
+      padding: 50px 0 70px;
+      text-align: center;
+    }
+    .resto-hero h1 {
+      font-size: 40px;
+      margin-bottom: 10px;
+    }
+    .resto-hero p {
+      color: #94a3b8;
+      font-size: 16px;
+    }
+
+    /* --- City & Filter Wrapper --- */
+    .filter-wrapper {
+      max-width: 1000px;
+      margin: -35px auto 40px;
+      background: white;
+      padding: 20px 30px;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      position: relative;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .city-selector {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      border-bottom: 1px solid #e2e8f0;
+      padding-bottom: 15px;
+    }
+    .city-selector label {
+      font-weight: 700;
+      color: var(--primary-dark);
+    }
+    .city-selector select {
+      padding: 8px 15px;
+      border-radius: 8px;
+      border: 1px solid #cbd5e1;
+      font-weight: 600;
+      background: #f8fafc;
+      cursor: pointer;
+    }
+    .filter-section {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .filter-btn {
+      background: #f1f5f9;
+      border: none;
+      padding: 10px 20px;
+      font-size: 14px;
+      font-weight: 700;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: var(--text-light);
+    }
+    .filter-btn:hover, .filter-btn.active {
+      background: var(--secondary-orange);
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(249,115,22,0.3);
+    }
+
+    /* --- Promotional Ad Banner --- */
+    .ad-banner {
+      background: linear-gradient(135deg, #f97316 0%, #ec4899 100%);
+      color: white;
+      border-radius: 16px;
+      padding: 25px 30px;
+      text-align: center;
+      margin-bottom: 40px;
+      box-shadow: 0 10px 25px rgba(236,72,153,0.3);
+      position: relative;
+      overflow: hidden;
+    }
+    .ad-banner h3 { font-size: 22px; margin-bottom: 5px; }
+    .ad-banner p { font-size: 15px; opacity: 0.95; }
+    .ad-badge {
+      position: absolute;
+      top: 12px;
+      right: 15px;
+      background: rgba(255,255,255,0.25);
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      letter-spacing: 1px;
+      font-weight: bold;
+    }
+
+    /* --- Grid & Cards --- */
+    .section-title {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--primary-dark);
+      margin-bottom: 25px;
+    }
+    .ent-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 30px;
+      padding-bottom: 80px;
+    }
+    .ent-card {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+      transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+      display: flex;
+      flex-direction: column;
+    }
+    .ent-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+    }
+    .card-img {
+      width: 100%;
+      height: 220px;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+    .badge-format {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(5px);
+      color: white;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+    }
+    .card-content {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      justify-content: space-between;
+    }
+    .card-title {
+      font-size: 18px;
+      font-weight: 800;
+      margin-bottom: 6px;
+      color: var(--text-dark);
+    }
+    .card-meta {
+      font-size: 13px;
+      color: var(--text-light);
+      margin-bottom: 15px;
+    }
+    .book-btn {
+      width: 100%;
+      background: var(--primary-blue);
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+    .book-btn:hover { background: var(--primary-dark); }
+    .ent-card.hidden { display: none; }
+
+    /* --- Modal & Booking Flow --- */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(8px);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 0.3s ease;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal-content {
+      background: white;
+      width: 95%;
+      max-width: 950px;
+      max-height: 90vh;
+      overflow-y: auto;
+      border-radius: 24px;
+      padding: 35px;
+      position: relative;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+    }
+    .close-modal {
+      position: absolute;
+      top: 20px; right: 25px;
+      font-size: 28px;
+      cursor: pointer;
+      color: #94a3b8;
+      transition: color 0.2s;
+    }
+    .close-modal:hover { color: var(--text-dark); }
+
+    .booking-step { display: none; animation: slideUp 0.4s ease; }
+    .booking-step.active { display: block; }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 { font-size: 22px; color: var(--primary-dark); margin-bottom: 20px; border-bottom: 2px solid #f1f5f9; padding-bottom: 12px; }
+
+    .form-group { margin-bottom: 20px; }
+    .form-group label { display: block; font-weight: 700; margin-bottom: 8px; font-size: 14px; color: var(--text-dark); }
+    select, input {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      font-size: 15px;
+      background: #f8fafc;
+      color: var(--text-dark);
+      outline: none;
+    }
+    select:focus, input:focus { border-color: var(--primary-blue); }
+
+    /* Fixed Schedule Card for Matches & Parks */
+    .fixed-schedule-card {
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .fixed-schedule-card div strong { display: block; font-size: 16px; color: var(--primary-dark); margin-bottom: 4px; }
+    .fixed-schedule-card span { font-size: 13px; color: var(--text-light); }
+
+    /* Theater Cards with Multiple Showtimes for Movies */
+    .theater-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 18px;
+      margin-bottom: 15px;
+      background: #f8fafc;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .theater-info-row { display: flex; justify-content: space-between; align-items: center; }
+    .time-slots { display: flex; gap: 8px; flex-wrap: wrap; }
+    .time-pill {
+      background: white;
+      padding: 7px 14px;
+      border-radius: 8px;
+      border: 1px solid #cbd5e1;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 13px;
+      transition: all 0.2s;
+    }
+    .time-pill:hover, .time-pill.selected {
+      background: var(--primary-blue);
+      color: white;
+      border-color: var(--primary-blue);
+    }
+
+    /* --- Theater & Arena Seating --- */
+    .screen-indicator {
+      background: linear-gradient(90deg, transparent, #3b82f6, transparent);
+      height: 6px;
+      width: 75%;
+      margin: 0 auto 30px;
+      border-radius: 4px;
+      box-shadow: 0 10px 15px rgba(59,130,246,0.4);
+      text-align: center;
+      position: relative;
+    }
+    .screen-indicator span {
+      position: absolute;
+      top: -18px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 10px;
+      letter-spacing: 2px;
+      font-weight: 800;
+      color: #64748b;
+    }
+
+    .seating-area {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 20px;
+      background: #f1f5f9;
+      border-radius: 16px;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    .seat-row {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+    .row-label {
+      font-size: 11px;
+      font-weight: 800;
+      color: #64748b;
+      width: 85px;
+      text-align: right;
+      margin-right: 8px;
+    }
+    .seat {
+      width: 24px;
+      height: 24px;
+      background-color: var(--seat-available);
+      border-radius: 4px 4px 2px 2px;
+      cursor: pointer;
+      transition: transform 0.2s, background-color 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 9px;
+      color: white;
+      font-weight: bold;
+    }
+    .seat.recliner { background-color: var(--seat-recliner); width: 32px; height: 26px; border-radius: 6px; }
+    .seat.vip { background-color: var(--seat-vip); }
+    .seat.club { background-color: var(--seat-premium); }
+    .seat.cheap { background-color: var(--seat-cheap); }
+    .seat:hover:not(.sold) { transform: scale(1.15); }
+    .seat.selected { background-color: var(--seat-selected) !important; box-shadow: 0 0 10px rgba(16,185,129,0.5); }
+    .seat.sold { background-color: var(--seat-sold) !important; cursor: not-allowed; opacity: 0.6; }
+
+    .seat-legend {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+    .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: #475569; }
+    .legend-box { width: 12px; height: 12px; border-radius: 3px; }
+
+    /* --- Concert Arena Styling --- */
+    .concert-arena {
+      background: radial-gradient(circle, #2e1065 0%, #0f172a 100%);
+      border-radius: 20px;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: inset 0 0 40px rgba(0,0,0,0.8);
+    }
+    .concert-stage {
+      width: 280px;
+      height: 45px;
+      background: linear-gradient(135deg, #8b5cf6, #ec4899);
+      border-radius: 8px;
+      margin-bottom: 25px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 900;
+      letter-spacing: 2px;
+      font-size: 12px;
+      box-shadow: 0 0 25px rgba(236,72,153,0.8);
+    }
+
+    /* --- Stadium Arena --- */
+    .stadium-arena {
+      background: radial-gradient(circle, #064e3b 0%, #022c22 100%);
+      border-radius: 20px;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: inset 0 0 40px rgba(0,0,0,0.6);
+    }
+    .pitch-center {
+      width: 200px;
+      height: 110px;
+      background: #047857;
+      border: 2px dashed rgba(255,255,255,0.4);
+      border-radius: 50px;
+      margin: 15px 0 25px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 800;
+      letter-spacing: 2px;
+      font-size: 11px;
+      box-shadow: 0 0 25px rgba(4,120,87,0.8);
+    }
+    .curved-stands {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
+    }
+
+    /* --- Park Pass Quantity Selector UI --- */
+    .park-ticket-container {
+      background: #f1f5f9;
+      border-radius: 16px;
+      padding: 25px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    .park-ticket-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: white;
+      padding: 16px 20px;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+    }
+    .park-ticket-info h4 { font-size: 16px; color: var(--primary-dark); margin-bottom: 2px; }
+    .park-ticket-info span { font-size: 13px; color: var(--text-light); }
+    .counter-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .counter-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      border: 1px solid #cbd5e1;
+      background: #f8fafc;
+      font-weight: 800;
+      font-size: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+    .counter-btn:hover { background: var(--primary-blue); color: white; border-color: var(--primary-blue); }
+    .counter-value { font-size: 16px; font-weight: 800; width: 24px; text-align: center; }
+
+    /* --- Ticket Pass --- */
+    .ticket-pass {
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-blue) 100%);
+      color: white;
+      border-radius: 20px;
+      display: flex;
+      overflow: hidden;
+      margin: 20px 0;
+      box-shadow: 0 15px 35px rgba(37,99,235,0.3);
+    }
+    .ticket-info { padding: 25px; flex: 2; border-right: 2px dashed rgba(255,255,255,0.3); }
+    .ticket-barcode {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      background: rgba(0,0,0,0.15);
+      text-align: center;
+    }
+    .ticket-barcode svg { width: 90px; height: 90px; fill: white; margin-bottom: 10px; }
+
+    .btn-main {
+      background: var(--secondary-orange);
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+    .btn-main:hover { background: #ea580c; transform: translateY(-2px); }
+
+    /* --- My Bookings Card Styling --- */
+    .my-booking-card {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      color: white;
+      border-radius: 16px;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-left: 5px solid var(--secondary-orange);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+      margin-bottom: 12px;
+    }
+    .my-booking-card .type-badge {
+      background: var(--primary-blue);
+      font-size: 10px;
+      text-transform: uppercase;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-weight: 800;
+      margin-bottom: 6px;
+      display: inline-block;
+      letter-spacing: 0.5px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+</style>
 </head>
 <body>
 
   <!-- Navigation -->
-     <header>
-      <div class="container">
-        <nav class="navbar">
-          <div class="logo">
-            <a href="index.html" class="logo-text">
-              <i class="fa-solid fa-location-dot"></i>
-              BookVerse
+  <header>
+    <div class="container">
+      <nav class="navbar">
+        <div class="logo">
+          <a href="#" class="logo-text">
+            <i class="fa-solid fa-location-dot"></i>
+            BookVerse
+          </a>
+        </div>
+
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="travel.html">Travel</a></li>
+          <li><a href="entertainment.html">Entertainment</a></li>
+          <li><a href="restaurant.html">Restaurant</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li>
+            <a href="#" onclick="openMyBookingsModal(event)" style="color:black; font-weight: 700;">
+              My Bookings 
+              <span id="bookingCountBadge" style="background: var(--secondary-orange); color: white; border-radius: 12px; padding: 2px 8px; font-size: 11px; vertical-align: middle; margin-left: 3px;">0</span>
             </a>
-          </div>
+          </li>
+        </ul>
 
-          <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="travel.html">Travel</a></li>
-            <li><a href="entertainment.html">Entertainment</a></li>
-            <li><a href="restaurant.html">Restaurant</a></li>
-            <li><a href="contact.html">Contact</a></li>
-          </ul>
-
-          <div class="nav-buttons">
-            <a href="login.html" class="login-btn">Login</a>
-            <a href="register.html" class="register-btn">Register</a>
-          </div>
-        </nav>
-      </div>
-    </header>
-
-    <main>
-      <!-- Hero Section -->
-      <section class="resto-hero">
-        <div class="container">
-          <h1>Discover & Book Top Dining Experiences</h1>
-          <p>
-            Reserve tables instantly at the city's finest restaurants, cafes,
-            and fine-dine spots.
-          </p>
+        <div class="nav-buttons">
+          <a href="#" class="login-btn">Login</a>
+          <a href="#" class="register-btn">Register</a>
         </div>
-      </section>
+      </nav>
+    </div>
+  </header>
 
-  <!-- Filter & City Selector Wrapper -->
-  <div class="container">
-    <div class="filter-wrapper">
-      <div class="city-selector">
-        <label for="citySelect">Select City:</label>
-        <select id="citySelect">
-          <option value="mumbai">Mumbai</option>
-          <option value="delhi">Delhi NCR</option>
-          <option value="bengaluru">Bengaluru</option>
-          <option value="hyderabad">Hyderabad</option>
-        </select>
+  <main>
+    <!-- Hero Section -->
+    <section class="resto-hero">
+      <div class="container">
+        <h1>Discover & Book Top Dining & Entertainment Experiences</h1>
+        <p>
+          Reserve tickets, match passes, and event seats instantly at your city's prime spots.
+        </p>
       </div>
-      <div class="filter-section">
-        <button class="filter-btn active" onclick="filterCategory('all', event)">All Experiences</button>
-        <button class="filter-btn" onclick="filterCategory('movie', event)">Blockbuster Movies</button>
-        <button class="filter-btn" onclick="filterCategory('match', event)">Sports Stadiums</button>
-        <button class="filter-btn" onclick="filterCategory('concert', event)">Concerts</button>
-        <button class="filter-btn" onclick="filterCategory('park', event)">Theme & Water Parks</button>
+    </section>
+
+    <!-- Filter & City Selector Wrapper -->
+    <div class="container">
+      <div class="filter-wrapper">
+        <div class="city-selector">
+          <label for="citySelect">Select City:</label>
+          <select id="citySelect">
+            <option value="mumbai">Mumbai</option>
+            <option value="delhi">Delhi NCR</option>
+            <option value="bengaluru">Bengaluru</option>
+            <option value="hyderabad">Hyderabad</option>
+          </select>
+        </div>
+        <div class="filter-section">
+          <button class="filter-btn active" onclick="filterCategory('all', event)">All Experiences</button>
+          <button class="filter-btn" onclick="filterCategory('movie', event)">Blockbuster Movies</button>
+          <button class="filter-btn" onclick="filterCategory('match', event)">Sports Stadiums</button>
+          <button class="filter-btn" onclick="filterCategory('concert', event)">Concerts</button>
+          <button class="filter-btn" onclick="filterCategory('park', event)">Theme & Water Parks</button>
+        </div>
+      </div>
+
+      <!-- Ad Banner -->
+      <div class="ad-banner">
+        <span class="ad-badge">Partner Offer</span>
+        <h3>Shivay Dosa Center Special Food Pass</h3>
+        <p>Enjoy mouth-watering snacks & quick bites at special partner discounts from 13 Feb 2026 to 17 Feb 2026!</p>
+      </div>
+
+      <!-- Entertainment Grid -->
+      <h2 class="section-title">Featured Bookings</h2>
+      <div class="ent-grid" id="entertainmentGrid">
+        
+        <!-- Movie 1: Spider-Man -->
+        <div class="ent-card" data-category="movie">
+          <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1635805737707-575885ab0820?auto=format&fit=crop&w=600&q=80');">
+            <span class="badge-format">IMAX / 3D / 4DX</span>
+          </div>
+          <div class="card-content">
+            <div>
+              <div class="card-title">Spider-Man: Brand New Day</div>
+              <div class="card-meta">Action / Sci-Fi • 2h 45m</div>
+            </div>
+            <button class="book-btn" onclick="openBooking('Spider-Man: Brand New Day', 'movie')">Book Movie</button>
+          </div>
+        </div>
+
+        <!-- Movie 2: Odyssey -->
+        <div class="ent-card" data-category="movie">
+          <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=600&q=80');">
+            <span class="badge-format">DOLBY / SCREENX</span>
+          </div>
+          <div class="card-content">
+            <div>
+              <div class="card-title">Odyssey</div>
+              <div class="card-meta">Adventure / Drama • 3h 10m</div>
+            </div>
+            <button class="book-btn" onclick="openBooking('Odyssey', 'movie')">Book Movie</button>
+          </div>
+        </div>
+
+        <!-- Match 1: IPL -->
+        <div class="ent-card" data-category="match">
+          <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&w=600&q=80');">
+            <span class="badge-format">FIXED TIMING</span>
+          </div>
+          <div class="card-content">
+            <div>
+              <div class="card-title">IPL: Mumbai vs Chennai</div>
+              <div class="card-meta">Wankhede Stadium, Mumbai • Fixed Match Schedule</div>
+            </div>
+            <button class="book-btn" onclick="openBooking('IPL: Mumbai vs Chennai', 'match')">Book Seats</button>
+          </div>
+        </div>
+
+        <!-- Match 2: ISL -->
+        <div class="ent-card" data-category="match">
+          <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=600&q=80');">
+            <span class="badge-format">FIXED TIMING</span>
+          </div>
+          <div class="card-content">
+            <div>
+              <div class="card-title">ISL: Mumbai City vs Mohun Bagan</div>
+              <div class="card-meta">Football Arena, Mumbai • Fixed Match Schedule</div>
+            </div>
+            <button class="book-btn" onclick="openBooking('ISL: Mumbai City vs Mohun Bagan', 'match')">Book Seats</button>
+          </div>
+        </div>
+
+        <!-- Concert: Coldplay -->
+        <div class="ent-card" data-category="concert">
+          <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=600&q=80');">
+            <span class="badge-format">LIVE CONCERT</span>
+          </div>
+          <div class="card-content">
+            <div>
+              <div class="card-title">Coldplay: Sphere Tour</div>
+              <div class="card-meta">DY Patil Stadium • Fixed Schedule</div>
+            </div>
+            <button class="book-btn" onclick="openBooking('Coldplay: Sphere Tour', 'concert')">Book Tickets</button>
+          </div>
+        </div>
+
+        <!-- Theme & Water Park -->
+        <div class="ent-card" data-category="park">
+          <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1582281298055-e2c38d38e2bb?auto=format&fit=crop&w=600&q=80');">
+            <span class="badge-format">FULL DAY PASS</span>
+          </div>
+          <div class="card-content">
+            <div>
+              <div class="card-title">AquSplash Water Kingdom</div>
+              <div class="card-meta">All Day Access • Fixed Park Timings</div>
+            </div>
+            <button class="book-btn" onclick="openBooking('AquaSplash Water Kingdom', 'park')">Book Passes</button>
+          </div>
+        </div>
+
       </div>
     </div>
-
-    <!-- Ad Banner -->
-    <div class="ad-banner">
-      <span class="ad-badge">Partner Offer</span>
-      <h3>Shivay Dosa Center Special Food Pass</h3>
-      <p>Enjoy mouth-watering snacks & quick bites at special partner discounts from 13 Feb 2026 to 17 Feb 2026!</p>
-    </div>
-
-    <!-- Entertainment Grid -->
-    <h2 class="section-title">Featured Bookings</h2>
-    <div class="ent-grid" id="entertainmentGrid">
-      
-      <!-- Movie 1: Spider-Man -->
-      <div class="ent-card" data-category="movie">
-        <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1635805737707-575885ab0820?auto=format&fit=crop&w=600&q=80');">
-          <span class="badge-format">IMAX / 3D / 4DX</span>
-        </div>
-        <div class="card-content">
-          <div>
-            <div class="card-title">Spider-Man: Brand New Day</div>
-            <div class="card-meta">Action / Sci-Fi • 2h 45m</div>
-          </div>
-          <button class="book-btn" onclick="openBooking('Spider-Man: Brand New Day', 'movie')">Book Movie</button>
-        </div>
-      </div>
-
-      <!-- Movie 2: Odyssey -->
-      <div class="ent-card" data-category="movie">
-        <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=600&q=80');">
-          <span class="badge-format">DOLBY / SCREENX</span>
-        </div>
-        <div class="card-content">
-          <div>
-            <div class="card-title">Odyssey</div>
-            <div class="card-meta">Adventure / Drama • 3h 10m</div>
-          </div>
-          <button class="book-btn" onclick="openBooking('Odyssey', 'movie')">Book Movie</button>
-        </div>
-      </div>
-
-      <!-- Match 1: IPL -->
-      <div class="ent-card" data-category="match">
-        <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&w=600&q=80');">
-          <span class="badge-format">FIXED TIMING</span>
-        </div>
-        <div class="card-content">
-          <div>
-            <div class="card-title">IPL: Mumbai vs Chennai</div>
-            <div class="card-meta">Wankhede Stadium, Mumbai • Fixed Match Schedule</div>
-          </div>
-          <button class="book-btn" onclick="openBooking('IPL: Mumbai vs Chennai', 'match')">Book Seats</button>
-        </div>
-      </div>
-
-      <!-- Match 2: ISL -->
-      <div class="ent-card" data-category="match">
-        <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=600&q=80');">
-          <span class="badge-format">FIXED TIMING</span>
-        </div>
-        <div class="card-content">
-          <div>
-            <div class="card-title">ISL: Mumbai City vs Mohun Bagan</div>
-            <div class="card-meta">Football Arena, Mumbai • Fixed Match Schedule</div>
-          </div>
-          <button class="book-btn" onclick="openBooking('ISL: Mumbai City vs Mohun Bagan', 'match')">Book Seats</button>
-        </div>
-      </div>
-
-      <!-- Concert: Coldplay -->
-      <div class="ent-card" data-category="concert">
-        <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=600&q=80');">
-          <span class="badge-format">LIVE CONCERT</span>
-        </div>
-        <div class="card-content">
-          <div>
-            <div class="card-title">Coldplay: Sphere Tour</div>
-            <div class="card-meta">DY Patil Stadium • Fixed Schedule</div>
-          </div>
-          <button class="book-btn" onclick="openBooking('Coldplay: Sphere Tour', 'concert')">Book Tickets</button>
-        </div>
-      </div>
-
-      <!-- Theme & Water Park -->
-      <div class="ent-card" data-category="park">
-        <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1582281298055-e2c38d38e2bb?auto=format&fit=crop&w=600&q=80');">
-          <span class="badge-format">FULL DAY PASS</span>
-        </div>
-        <div class="card-content">
-          <div>
-            <div class="card-title">Imagica </div>
-            <div class="card-meta">All Day Access • Fixed Park Timings</div>
-          </div>
-          <button class="book-btn" onclick="openBooking('AquaSplash Water Kingdom', 'park')">Book Passes</button>
-        </div>
-      </div>
-
-    </div>
-  </div>
+  </main>
 
   <!-- Multi-Step Booking Modal -->
   <div class="modal-overlay" id="bookingModal">
@@ -256,11 +806,80 @@
     </div>
   </div>
 
+  <!-- My Bookings Nav Modal -->
+  <div class="modal-overlay" id="myBookingsModal">
+    <div class="modal-content" style="max-width: 700px;">
+      <span class="close-modal" onclick="closeMyBookingsModal()">&times;</span>
+      <h2 style="margin-bottom: 20px;"><i class="fa-solid fa-ticket" style="color: var(--secondary-orange);"></i> My Bookings</h2>
+      <div id="myBookingsList" style="display: flex; flex-direction: column; gap: 10px; max-height: 60vh; overflow-y: auto;">
+        <!-- Saved Bookings will render here dynamically -->
+      </div>
+    </div>
+  </div>
+
   <script>
     let currentEvent = {};
     let selectedSeatsList = [];
     let selectedShow = '';
     let parkTickets = { adult: 0, child: 0, express: 0 };
+    
+    // Manage persistent bookings array
+    let bookings = JSON.parse(localStorage.getItem('bookverse_bookings')) || [];
+
+    function updateBookingBadge() {
+      const badge = document.getElementById('bookingCountBadge');
+      if (badge) badge.innerText = bookings.length;
+    }
+
+    function openMyBookingsModal(e) {
+      if(e) e.preventDefault();
+      renderMyBookings();
+      document.getElementById('myBookingsModal').classList.add('active');
+    }
+
+    function closeMyBookingsModal() {
+      document.getElementById('myBookingsModal').classList.remove('active');
+    }
+
+    function renderMyBookings() {
+      const container = document.getElementById('myBookingsList');
+      if (bookings.length === 0) {
+        container.innerHTML = `
+          <div style="text-align: center; padding: 40px; color: var(--text-light);">
+            <i class="fa-solid fa-ticket-simple" style="font-size: 48px; margin-bottom: 12px; opacity: 0.5;"></i>
+            <p style="font-size: 16px;">No bookings found yet. Explore and book your tickets!</p>
+          </div>`;
+        return;
+      }
+
+      let html = '';
+      bookings.forEach((b, index) => {
+        html += `
+          <div class="my-booking-card">
+            <div>
+              <span class="type-badge">${b.type}</span>
+              <h4 style="font-size: 18px; font-weight: 800; margin-bottom: 4px;">${b.title}</h4>
+              <p style="font-size: 13px; color: #cbd5e1; margin-bottom: 6px;">${b.details}</p>
+              <div style="font-size: 12px; color: #94a3b8;">Booked on: ${b.date} | ID: #${b.id}</div>
+            </div>
+            <div style="text-align: right;">
+              <div style="font-size: 16px; font-weight: 800; color: var(--secondary-orange); margin-bottom: 8px;">${b.price}</div>
+              <button onclick="removeBooking(${index})" style="background: rgba(239, 68, 68, 0.2); color: #ef4444; border: 1px solid #ef4444; padding: 5px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: 600;">Cancel Pass</button>
+            </div>
+          </div>
+        `;
+      });
+      container.innerHTML = html;
+    }
+
+    function removeBooking(index) {
+      if(confirm('Are you sure you want to cancel this booking pass?')) {
+        bookings.splice(index, 1);
+        localStorage.setItem('bookverse_bookings', JSON.stringify(bookings));
+        updateBookingBadge();
+        renderMyBookings();
+      }
+    }
 
     function filterCategory(category, event) {
       document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
@@ -347,10 +966,10 @@
               <span style="font-size:12px; color:var(--text-light)">Dolby Atmos / Laser</span>
             </div>
             <div class="time-slots">
-              <span class="time-pill" onclick="selectShowtime('PVR ICON - 10:00 AM')">10:00 AM</span>
-              <span class="time-pill" onclick="selectShowtime('PVR ICON - 01:30 PM')">01:30 PM</span>
-              <span class="time-pill" onclick="selectShowtime('PVR ICON - 05:00 PM')">05:00 PM</span>
-              <span class="time-pill" onclick="selectShowtime('PVR ICON - 08:45 PM')">08:45 PM</span>
+              <span class="time-pill" onclick="selectShowtime('PVR ICON - 10:00 AM', event)">10:00 AM</span>
+              <span class="time-pill" onclick="selectShowtime('PVR ICON - 01:30 PM', event)">01:30 PM</span>
+              <span class="time-pill" onclick="selectShowtime('PVR ICON - 05:00 PM', event)">05:00 PM</span>
+              <span class="time-pill" onclick="selectShowtime('PVR ICON - 08:45 PM', event)">08:45 PM</span>
             </div>
           </div>
           <div class="theater-card">
@@ -359,9 +978,9 @@
               <span style="font-size:12px; color:var(--text-light)">IMAX Screen</span>
             </div>
             <div class="time-slots">
-              <span class="time-pill" onclick="selectShowtime('Cinepolis - 11:15 AM')">11:15 AM</span>
-              <span class="time-pill" onclick="selectShowtime('Cinepolis - 03:00 PM')">03:00 PM</span>
-              <span class="time-pill" onclick="selectShowtime('Cinepolis - 07:15 PM')">07:15 PM</span>
+              <span class="time-pill" onclick="selectShowtime('Cinepolis - 11:15 AM', event)">11:15 AM</span>
+              <span class="time-pill" onclick="selectShowtime('Cinepolis - 03:00 PM', event)">03:00 PM</span>
+              <span class="time-pill" onclick="selectShowtime('Cinepolis - 07:15 PM', event)">07:15 PM</span>
             </div>
           </div>
         `;
@@ -369,10 +988,10 @@
       container.innerHTML = html;
     }
 
-    function selectShowtime(showtime) {
+    function selectShowtime(showtime, evt) {
       selectedShow = showtime;
       document.querySelectorAll('.time-pill').forEach(p => p.classList.remove('selected'));
-      event.target.classList.add('selected');
+      if(evt) evt.target.classList.add('selected');
       setTimeout(() => {
         showStep(2);
         buildSeatingChart(currentEvent.type);
@@ -401,171 +1020,151 @@
           <div class="park-ticket-container">
             <div class="park-ticket-row">
               <div class="park-ticket-info">
-                <h4>Adult Pass (Age 12+)</h4>
-                <span>Full day water rides & park access • ₹999</span>
+                <h4>Adult Pass (Above 12 yrs)</h4>
+                <span>₹1,499 per ticket</span>
               </div>
               <div class="counter-controls">
-                <button class="counter-btn" onclick="updateParkTicket('adult', -1)">-</button>
-                <span class="counter-value" id="countAdult">0</span>
-                <button class="counter-btn" onclick="updateParkTicket('adult', 1)">+</button>
+                <button class="counter-btn" onclick="changeParkTicket('adult', -1)">-</button>
+                <span class="counter-value" id="count-adult">0</span>
+                <button class="counter-btn" onclick="changeParkTicket('adult', 1)">+</button>
               </div>
             </div>
             <div class="park-ticket-row">
               <div class="park-ticket-info">
-                <h4>Child Pass (Age 3-11)</h4>
-                <span>Valid ID required • ₹699</span>
+                <h4>Child Pass (3 - 12 yrs)</h4>
+                <span>₹999 per ticket</span>
               </div>
               <div class="counter-controls">
-                <button class="counter-btn" onclick="updateParkTicket('child', -1)">-</button>
-                <span class="counter-value" id="countChild">0</span>
-                <button class="counter-btn" onclick="updateParkTicket('child', 1)">+</button>
+                <button class="counter-btn" onclick="changeParkTicket('child', -1)">-</button>
+                <span class="counter-value" id="count-child">0</span>
+                <button class="counter-btn" onclick="changeParkTicket('child', 1)">+</button>
               </div>
             </div>
             <div class="park-ticket-row">
               <div class="park-ticket-info">
-                <h4>Express Queue Add-on</h4>
-                <span>Skip lines at major rides • ₹499</span>
+                <h4>FastTrack Express Pass</h4>
+                <span>₹2,299 per ticket</span>
               </div>
               <div class="counter-controls">
-                <button class="counter-btn" onclick="updateParkTicket('express', -1)">-</button>
-                <span class="counter-value" id="countExpress">0</span>
-                <button class="counter-btn" onclick="updateParkTicket('express', 1)">+</button>
+                <button class="counter-btn" onclick="changeParkTicket('express', -1)">-</button>
+                <span class="counter-value" id="count-express">0</span>
+                <button class="counter-btn" onclick="changeParkTicket('express', 1)">+</button>
               </div>
             </div>
           </div>
         `;
-      } else if(type === 'concert') {
-        // Dedicated Concert Arena Layout
-        document.getElementById('seatingHeader').innerText = 'Select Concert Arena Seats';
-        let html = `<div class="concert-arena"><div class="concert-stage">MAIN STAGE</div><div class="curved-stands">`;
-        
-        // Concert Tier Rows: Fan Pit VIP, Floor Arena, Elevated Stands
-        const rows = [10, 12, 14, 16, 18];
-        rows.forEach((seats, rIdx) => {
-          html += `<div class="curve-row">`;
-          for(let s = 1; s <= seats; s++) {
-            const isSold = Math.random() < 0.3;
-            const price = rIdx < 2 ? 2500 : (rIdx < 4 ? 1500 : 800);
-            const categoryClass = rIdx < 2 ? 'vip' : (rIdx < 4 ? 'club' : 'cheap');
-            const seatClass = `seat ${categoryClass} ${isSold ? 'sold' : ''}`;
-            const zoneName = rIdx < 2 ? 'VIP Pit' : (rIdx < 4 ? 'Floor' : 'Stand');
-            html += `<div class="${seatClass}" ${!isSold ? `onclick="toggleSeat(this, '${zoneName}-${String.fromCharCode(65+rIdx)}${s}', ${price})"` : ''}>${s}</div>`;
-          }
-          html += `</div>`;
-        });
-        html += `</div></div>
-        <div class="seat-legend">
-          <div class="legend-item"><div class="legend-box" style="background: var(--seat-vip)"></div> Front VIP Fan Pit (₹2500)</div>
-          <div class="legend-item"><div class="legend-box" style="background: var(--seat-premium)"></div> Floor Arena (₹1500)</div>
-          <div class="legend-item"><div class="legend-box" style="background: var(--seat-cheap)"></div> Elevated Stands (₹800)</div>
-          <div class="legend-item"><div class="legend-box" style="background: var(--seat-sold)"></div> Sold Out</div>
-        </div>`;
-        container.innerHTML = html;
       } else if(type === 'match') {
-        document.getElementById('seatingHeader').innerText = 'Select Stadium Seats';
-        let html = `<div class="stadium-arena"><div class="pitch-center">FIELD</div><div class="curved-stands">`;
-        const rows = [12, 14, 16, 18, 20];
-        rows.forEach((seats, rIdx) => {
-          html += `<div class="curve-row">`;
-          for(let s = 1; s <= seats; s++) {
-            const isSold = Math.random() < 0.3;
-            const price = rIdx < 2 ? 1500 : (rIdx < 4 ? 1000 : 750);
-            const seatClass = `seat ${isSold ? 'sold' : ''} ${rIdx < 2 ? 'club' : (rIdx > 3 ? 'cheap' : '')}`;
-            html += `<div class="${seatClass}" ${!isSold ? `onclick="toggleSeat(this, 'Block-${String.fromCharCode(65+rIdx)}${s}', ${price})"` : ''}>${s}</div>`;
-          }
-          html += `</div>`;
-        });
-        html += `</div></div>
-        <div class="seat-legend">
-          <div class="legend-item"><div class="legend-box" style="background: var(--seat-premium)"></div> VIP/Club (₹1500)</div>
-          <div class="legend-item"><div class="legend-box" style="background: var(--seat-available)"></div> General (₹1000)</div>
-          <div class="legend-item"><div class="legend-box" style="background: var(--seat-cheap)"></div> Stands (₹750)</div>
-        </div>`;
-        container.innerHTML = html;
+        document.getElementById('seatingHeader').innerText = 'Select Stadium Stand & Seats';
+        container.innerHTML = `
+          <div class="stadium-arena">
+            <div class="pitch-center">STADIUM PITCH</div>
+            <div class="curved-stands">
+              <div class="seat-row"><span class="row-label">VIP Box</span>` + generateSeatRow('V', 8, 'vip', 2500) + `</div>
+              <div class="seat-row"><span class="row-label">Pavilion</span>` + generateSeatRow('P', 10, 'club', 1200) + `</div>
+              <div class="seat-row"><span class="row-label">East Stand</span>` + generateSeatRow('E', 12, 'cheap', 650) + `</div>
+            </div>
+          </div>
+          <div class="seat-legend">
+            <div class="legend-item"><div class="legend-box" style="background:var(--seat-vip)"></div> VIP Box (₹2500)</div>
+            <div class="legend-item"><div class="legend-box" style="background:var(--seat-premium)"></div> Pavilion Stand (₹1200)</div>
+            <div class="legend-item"><div class="legend-box" style="background:var(--seat-cheap)"></div> East Stand (₹650)</div>
+            <div class="legend-item"><div class="legend-box" style="background:var(--seat-sold)"></div> Sold</div>
+          </div>
+        `;
+      } else if(type === 'concert') {
+        document.getElementById('seatingHeader').innerText = 'Select Concert Zone & Seats';
+        container.innerHTML = `
+          <div class="concert-arena">
+            <div class="concert-stage">STAGE</div>
+            <div class="seating-area" style="background:transparent;">
+              <div class="seat-row"><span class="row-label" style="color:#e2e8f0;">Fan Pit</span>` + generateSeatRow('FP', 8, 'vip', 3500) + `</div>
+              <div class="seat-row"><span class="row-label" style="color:#e2e8f0;">Front Zone</span>` + generateSeatRow('FZ', 10, 'club', 2000) + `</div>
+              <div class="seat-row"><span class="row-label" style="color:#e2e8f0;">GA Lawn</span>` + generateSeatRow('GA', 12, 'cheap', 1000) + `</div>
+            </div>
+          </div>
+          <div class="seat-legend">
+            <div class="legend-item"><div class="legend-box" style="background:var(--seat-vip)"></div> Fan Pit (₹3500)</div>
+            <div class="legend-item"><div class="legend-box" style="background:var(--seat-premium)"></div> Front Zone (₹2000)</div>
+            <div class="legend-item"><div class="legend-box" style="background:var(--seat-cheap)"></div> GA Lawn (₹1000)</div>
+            <div class="legend-item"><div class="legend-box" style="background:var(--seat-sold)"></div> Sold</div>
+          </div>
+        `;
       } else {
-        // Movies Seating with Recliners
-        document.getElementById('seatingHeader').innerText = 'Select Theater Seats';
-        let html = `<div class="screen-indicator"><span>SCREEN</span></div><div class="seating-area">`;
-        const rowLetters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
-        rowLetters.forEach(row => {
-          html += `<div class="seat-row"><div class="row-label">${row}</div>`;
-          const isRecliner = row === 'H';
-          const price = isRecliner ? 600 : 250;
-          for(let s = 1; s <= 12; s++) {
-            if(s === 6) html += `<div style="width: 20px;"></div>`;
-            const isSold = Math.random() < 0.25;
-            const seatClass = `seat ${isRecliner ? 'recliner' : ''} ${isSold ? 'sold' : ''}`;
-            html += `<div class="${seatClass}" ${!isSold ? `onclick="toggleSeat(this, '${row}${s}', ${price})"` : ''}>${s}</div>`;
-          }
-          html += `</div>`;
-        });
-        html += `</div>
-        <div class="seat-legend">
-          <div class="legend-item"><div class="legend-box" style="background: var(--seat-available)"></div> Available (₹250)</div>
-          <div class="legend-item"><div class="legend-box" style="background: var(--seat-recliner); border-radius:4px;"></div> Recliner (₹600)</div>
-          <div class="legend-item"><div class="legend-box" style="background: var(--seat-selected)"></div> Selected</div>
-          <div class="legend-item"><div class="legend-box" style="background: var(--seat-sold)"></div> Sold</div>
-        </div>`;
-        container.innerHTML = html;
+        // Standard Cinema Seating
+        document.getElementById('seatingHeader').innerText = 'Select Your Theater Seats';
+        container.innerHTML = `
+          <div class="screen-indicator"><span>SCREEN THIS WAY</span></div>
+          <div class="seating-area">
+            <div class="seat-row"><span class="row-label">A (Recliner)</span>` + generateSeatRow('A', 8, 'recliner', 500) + `</div>
+            <div class="seat-row"><span class="row-label">B (VIP)</span>` + generateSeatRow('B', 10, 'vip', 350) + `</div>
+            <div class="seat-row"><span class="row-label">C (Club)</span>` + generateSeatRow('C', 10, 'club', 250) + `</div>
+            <div class="seat-row"><span class="row-label">D (Executive)</span>` + generateSeatRow('D', 12, 'cheap', 180) + `</div>
+          </div>
+          <div class="seat-legend">
+            <div class="legend-item"><div class="legend-box" style="background:var(--seat-recliner)"></div> Recliner (₹500)</div>
+            <div class="legend-item"><div class="legend-box" style="background:var(--seat-vip)"></div> VIP (₹350)</div>
+            <div class="legend-item"><div class="legend-box" style="background:var(--seat-premium)"></div> Club (₹250)</div>
+            <div class="legend-item"><div class="legend-box" style="background:var(--seat-cheap)"></div> Executive (₹180)</div>
+            <div class="legend-item"><div class="legend-box" style="background:var(--seat-sold)"></div> Sold</div>
+          </div>
+        `;
       }
     }
 
-    function updateParkTicket(ticketType, change) {
-      const newValue = parkTickets[ticketType] + change;
-      if (newValue >= 0 && newValue <= 15) {
-        parkTickets[ticketType] = newValue;
-        document.getElementById(`count${ticketType.charAt(0).toUpperCase() + ticketType.slice(1)}`).innerText = parkTickets[ticketType];
-        updateSummary();
+    function generateSeatRow(prefix, count, className, price) {
+      let html = '';
+      for(let i = 1; i <= count; i++) {
+        const isSold = Math.random() < 0.15 ? 'sold' : '';
+        const seatId = `${prefix}${i}`;
+        html += `<div class="seat ${className} ${isSold}" onclick="toggleSeat(this, '${seatId}', ${price})">${i}</div>`;
       }
+      return html;
     }
 
-    function toggleSeat(element, seatId, price) {
-      if (element.classList.contains('sold')) return;
-      
-      const index = selectedSeatsList.findIndex(s => s.id === seatId);
-      if (index > -1) {
-        selectedSeatsList.splice(index, 1);
-        element.classList.remove('selected');
+    function toggleSeat(elem, seatId, price) {
+      if(elem.classList.contains('sold')) return;
+
+      if(elem.classList.contains('selected')) {
+        elem.classList.remove('selected');
+        selectedSeatsList = selectedSeatsList.filter(s => s.id !== seatId);
       } else {
-        if (selectedSeatsList.length >= 10) {
-          alert("Maximum 10 seats can be selected per booking.");
-          return;
-        }
+        elem.classList.add('selected');
         selectedSeatsList.push({ id: seatId, price: price });
-        element.classList.add('selected');
       }
       updateSummary();
     }
 
-    function updateSummary() {
-      let total = 0;
-      let summaryText = "";
-      
-      if (currentEvent.type === 'park') {
-        const totalPasses = parkTickets.adult + parkTickets.child;
-        total = (parkTickets.adult * 999) + (parkTickets.child * 699) + (parkTickets.express * 499);
-        summaryText = `${totalPasses} Passes Selected`;
-      } else {
-        total = selectedSeatsList.reduce((sum, seat) => sum + seat.price, 0);
-        summaryText = `${selectedSeatsList.length} Seats Selected`;
-      }
+    function changeParkTicket(type, delta) {
+      parkTickets[type] = Math.max(0, parkTickets[type] + delta);
+      document.getElementById(`count-${type}`).innerText = parkTickets[type];
+      updateSummary();
+    }
 
-      document.getElementById('selectedCount').innerText = summaryText;
-      document.getElementById('totalPrice').innerText = `₹${total}`;
-      window.bookingTotalAmount = total;
+    function updateSummary() {
+      if (currentEvent.type === 'park') {
+        const totalPasses = parkTickets.adult + parkTickets.child + parkTickets.express;
+        const totalCost = (parkTickets.adult * 1499) + (parkTickets.child * 999) + (parkTickets.express * 2299);
+        document.getElementById('selectedCount').innerText = `${totalPasses} Passes`;
+        document.getElementById('totalPrice').innerText = `₹${totalCost}`;
+      } else {
+        const total = selectedSeatsList.reduce((sum, item) => sum + item.price, 0);
+        document.getElementById('selectedCount').innerText = `${selectedSeatsList.length} Selected`;
+        document.getElementById('totalPrice').innerText = `₹${total}`;
+      }
     }
 
     function proceedToPayment() {
-      let hasSelection = false;
       if (currentEvent.type === 'park') {
-        hasSelection = (parkTickets.adult + parkTickets.child) > 0;
+        const totalPasses = parkTickets.adult + parkTickets.child + parkTickets.express;
+        if (totalPasses === 0) {
+          alert('Please select at least 1 pass.');
+          return;
+        }
       } else {
-        hasSelection = selectedSeatsList.length > 0;
-      }
-
-      if (!hasSelection) {
-        alert("Please select at least one seat or ticket to proceed.");
-        return;
+        if (selectedSeatsList.length === 0) {
+          alert('Please select at least one seat to proceed.');
+          return;
+        }
       }
       showStep(3);
     }
@@ -573,20 +1172,43 @@
     function completeBooking() {
       document.getElementById('ticketEventName').innerText = currentEvent.title;
       
-      let bookingDetails = selectedShow + " • ";
+      let priceText = '';
+      let detailsText = '';
+
       if (currentEvent.type === 'park') {
-        const date = document.getElementById('parkDate').value;
-        bookingDetails += `Date: ${date} • ${parkTickets.adult} Adult, ${parkTickets.child} Child`;
+        const totalCost = (parkTickets.adult * 1499) + (parkTickets.child * 999) + (parkTickets.express * 2299);
+        const totalPasses = parkTickets.adult + parkTickets.child + parkTickets.express;
+        priceText = `Total Paid: ₹${totalCost}`;
+        detailsText = `${selectedShow} • ${totalPasses} Pass(es) Access`;
       } else {
-        const seatLabels = selectedSeatsList.map(s => s.id).join(', ');
-        bookingDetails += `Seats: ${seatLabels}`;
+        const seatsStr = selectedSeatsList.map(s => s.id).join(', ');
+        const totalCost = selectedSeatsList.reduce((sum, item) => sum + item.price, 0);
+        priceText = `Total Paid: ₹${totalCost}`;
+        detailsText = `${selectedShow} • Seats: ${seatsStr}`;
       }
+
+      document.getElementById('ticketDetails').innerText = detailsText;
+      document.getElementById('ticketPriceDisplay').innerText = priceText;
+
+      // Save ticket to My Bookings
+      const newBooking = {
+        id: Math.floor(100000 + Math.random() * 900000),
+        title: currentEvent.title,
+        type: currentEvent.type,
+        details: detailsText,
+        price: priceText,
+        date: new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })
+      };
       
-      document.getElementById('ticketDetails').innerText = bookingDetails;
-      document.getElementById('ticketPriceDisplay').innerText = `Total Paid: ₹${window.bookingTotalAmount}`;
-      
+      bookings.push(newBooking);
+      localStorage.setItem('bookverse_bookings', JSON.stringify(bookings));
+      updateBookingBadge();
+
       showStep(4);
     }
+
+    // Initialize Badge on page load
+    updateBookingBadge();
   </script>
 </body>
 </html>
