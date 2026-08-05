@@ -1,4 +1,4 @@
- 
+
     :root {
       --primary-blue: #2563eb;
       --primary-dark: #0f172a;
@@ -16,55 +16,23 @@
       --seat-vip: #8b5cf6;
       --seat-cheap: #94a3b8;
     }
-    .resto-hero {
-        background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
-        color: white;
-        padding: 50px 0;
-        text-align: center;
-      }
-      .resto-hero h1 {
-        font-size: 40px;
-        margin-bottom: 10px;
-      }
 
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-      background-color: var(--bg-light);
-      color: var(--text-dark);
-      overflow-x: hidden;
-    }
-
-   
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 20px;
-    }
+    
 
     /* --- Hero Section --- */
-    .ent-hero {
-      background: radial-gradient(circle at center, #1e3a8a 0%, #0f172a 100%);
+    .resto-hero {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
       color: white;
-      padding: 70px 0 90px;
+      padding: 50px 0 70px;
       text-align: center;
-      position: relative;
-      overflow: hidden;
     }
-    .ent-hero h1 {
-      font-size: 48px;
-      margin-bottom: 12px;
-      font-weight: 900;
+    .resto-hero h1 {
+      font-size: 40px;
+      margin-bottom: 10px;
     }
-    .ent-hero p {
-      font-size: 18px;
+    .resto-hero p {
       color: #94a3b8;
+      font-size: 16px;
     }
 
     /* --- City & Filter Wrapper --- */
@@ -469,11 +437,6 @@
       gap: 10px;
       align-items: center;
     }
-    .curve-row {
-      display: flex;
-      gap: 6px;
-      justify-content: center;
-    }
 
     /* --- Park Pass Quantity Selector UI --- */
     .park-ticket-container {
@@ -552,6 +515,31 @@
       transition: background 0.3s, transform 0.2s;
     }
     .btn-main:hover { background: #ea580c; transform: translateY(-2px); }
+
+    /* --- My Bookings Card Styling --- */
+    .my-booking-card {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      color: white;
+      border-radius: 16px;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-left: 5px solid var(--secondary-orange);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+      margin-bottom: 12px;
+    }
+    .my-booking-card .type-badge {
+      background: var(--primary-blue);
+      font-size: 10px;
+      text-transform: uppercase;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-weight: 800;
+      margin-bottom: 6px;
+      display: inline-block;
+      letter-spacing: 0.5px;
+    }
 
     @keyframes fadeIn {
       from { opacity: 0; }
